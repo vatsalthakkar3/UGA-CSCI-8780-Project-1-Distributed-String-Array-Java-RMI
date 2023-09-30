@@ -15,8 +15,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     private Map<Integer, String> writeLock = new HashMap<>();
 
     // Parametrized constructor.
-    public RemoteStringArrayImpl(int n) throws RemoteException {
+    public RemoteStringArrayImpl(int n, stringArray) throws RemoteException {
         this.stringArray = new String[n];
+        this.stringArray = stringArray;
     }
 
     public boolean getReadLock(int idx, String clientId) {
