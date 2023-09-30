@@ -7,4 +7,6 @@ public interface RemoteStringArray extends Remote{
 
     public int getCapacity() throws RemoteException;
 
+    public int readElement(int idx, String clientId) throws RemoteException;
+
 }

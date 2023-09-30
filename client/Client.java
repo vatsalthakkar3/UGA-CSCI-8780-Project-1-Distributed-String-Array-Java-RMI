@@ -11,8 +11,8 @@ public class Client {
         // lookup the rsa object and assign in s variable
         RemoteStringArray s = (RemoteStringArray) registry.lookup("rsa");
     
-        String uniqueId = s.sayHello();
-        System.out.println("Your UniqueId is " + uniqueId);
+        String clientId = s.sayHello();
+        System.out.println("Your UniqueId is " + clientId);
         
         Scanner sc = new Scanner(System.in);
 
@@ -21,12 +21,12 @@ public class Client {
             System.out.println("*             Options             *");
             System.out.println("***********************************");
             System.out.println("1. Get_Array_Capacity");
+            System.out.println("2. Fetch_Element_Read");
             System.out.println("2. Exit");
             System.out.println("***********************************");
             System.out.print("\nEnter Your Choice: ");
 
-            String choice = sc.next();
-            sc.nextLine();
+            String choice = sc.nextLine();
 
             System.out.print("\n");
             switch (choice) {
@@ -34,6 +34,10 @@ public class Client {
                     int capacity = s.getCapacity();
                     System.out.println("Capacity of the string array: " + capacity);
                     break;
+                case choice.startsWith("fetchRead"):
+                    int readElement = s.readElement(choice.split("")[1], clientId);
+                    if(readElement==null) System.out.println("error: Failed to read " + choice.split("")[1] + "th element");
+                    else System.out.println("info: Read Element succes "+ readElement);
                 case "exit":
                     System.out.println("Exiting...");
                     System.exit(0);
@@ -46,6 +50,7 @@ public class Client {
         }
       } catch (Exception e) {
          System.out.println("Exception in client side" + e);
+         e.printStackTrace()
          System.exit(0);
       }
    }
