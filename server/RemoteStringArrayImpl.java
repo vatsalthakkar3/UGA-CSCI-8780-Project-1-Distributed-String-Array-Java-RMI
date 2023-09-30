@@ -21,7 +21,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     }
 
     public boolean getReadLock(int idx, String clientId) {
-        if(this.writeLock.get(idx) != clientId) return false;
+        if(this.writeLock.containsKey(idx) && this.writeLock.get(idx) != clientId) return false;
         if (this.readLock.containsKey(idx)) this.readLock.get(idx).add(clientId);
         else {
             ArrayList<String> clientList = new ArrayList<>();
@@ -32,7 +32,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     }
 
     public boolean getWriteLock(int idx, String clientId) {
-        
+        if(this.writeLock.containsKey(idx) && this.writeLock.get(idx) != clientId) return false;
+        this.writeLock.put(idx, clientId);
+        return true;
     }
 
     @Override
