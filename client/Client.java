@@ -6,10 +6,17 @@ public class Client {
    public static void main(String[] args) {
       try {
 
-        Registry registry = LocateRegistry.getRegistry("127.0.0.1", 9100);
+        File confFile = new File(args[0]);
+//      read config from file
+        Scanner scanner = new Scanner(confFile);
+        String hostName = scanner.nextLine();
+        String bindName = scanner.nextLine();
+        
+
+        Registry registry = LocateRegistry.getRegistry(hostName, 9100);
 
         // lookup the rsa object and assign in s variable
-        RemoteStringArray s = (RemoteStringArray) registry.lookup("rsa");
+        RemoteStringArray s = (RemoteStringArray) registry.lookup(bindName);
     
         String clientId = s.sayHello();
         System.out.println("Your UniqueId is " + clientId);
