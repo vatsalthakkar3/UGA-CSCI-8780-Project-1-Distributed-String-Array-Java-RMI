@@ -12,15 +12,16 @@ public class Server {
         Scanner scanner = new Scanner(confFile);
         String bindName = scanner.nextLine();
 		int arrayCapacity = Integer.parseInt(scanner.nextLine());
-		String[] strs = scanner.nextLine().split(" ");
+		String[] stringArray = scanner.nextLine().split(" ");
 		
         System.out.println("Server is booting....");
         System.setProperty("java.rmi.server.hostname","127.0.0.1");
+
 		 
 
         // Create objects from RemoteStringArrayImpl.java class and share them 
 
-		RemoteStringArrayImpl s = new RemoteStringArrayImpl(10);
+		RemoteStringArrayImpl s = new RemoteStringArrayImpl(arrayCapacity, stringArray);
 
 		// Export s object before registered in Registry. 
 		RemoteStringArray stub1 = (RemoteStringArray) UnicastRemoteObject.exportObject(s, 0);
