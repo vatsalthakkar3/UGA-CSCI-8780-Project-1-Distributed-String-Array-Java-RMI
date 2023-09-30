@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-
 public class RemoteStringArrayImpl implements RemoteStringArray {
 
     // Define attributes and implement all the methods defined in product interface.
@@ -21,8 +20,10 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     }
 
     public boolean getReadLock(int idx, String clientId) {
-        if(this.writeLock.containsKey(idx) && this.writeLock.get(idx) != clientId) return false;
-        if (this.readLock.containsKey(idx)) this.readLock.get(idx).add(clientId);
+        if (this.writeLock.containsKey(idx) && this.writeLock.get(idx) != clientId)
+            return false;
+        if (this.readLock.containsKey(idx))
+            this.readLock.get(idx).add(clientId);
         else {
             ArrayList<String> clientList = new ArrayList<>();
             clientList.add(clientId);
@@ -32,7 +33,8 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     }
 
     public boolean getWriteLock(int idx, String clientId) {
-        if(this.writeLock.containsKey(idx) && this.writeLock.get(idx) != clientId) return false;
+        if (this.writeLock.containsKey(idx) && this.writeLock.get(idx) != clientId)
+            return false;
         this.writeLock.put(idx, clientId);
         return true;
     }
@@ -41,8 +43,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     public String sayHello() throws RemoteException {
         String uniqueId = UUID.randomUUID().toString();
         String clientName = "Client:" + (this.clientIds.size() + 1);
-        this.clientIds.put(uniqueId, clientName); //mapping ID to name instead for lookup in Map, as client knows its id and not its name
-        System.out.println("Hi 👋🏻 Server😘 " + clientName + " has joined with ID: " + uniqueId); //Server is flirty
+        this.clientIds.put(uniqueId, clientName); // mapping ID to name instead for lookup in Map, as client knows its
+                                                  // id and not its name
+        System.out.println("Hi 👋🏻 Server😘 " + clientName + " has joined with ID: " + uniqueId); // Server is flirty
         return uniqueId;
     }
 
@@ -54,13 +57,10 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     @Override
     public int readElement(int idx, String clientId) throws RemoteException {
         // Boolean readLock = getReadLock(idx);
-        if(getReadLock(idx, clientId)) {
+        if (getReadLock(idx, clientId)) {
             return this.stringArray[idx];
-        } else return null;
+        } else
+            return null;
     }
 
-    
-
-    
 }
-
