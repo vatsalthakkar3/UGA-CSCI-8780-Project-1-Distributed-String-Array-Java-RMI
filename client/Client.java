@@ -25,16 +25,16 @@ public class Client {
             System.out.println("***********************************");
             System.out.print("\nEnter Your Choice: ");
 
-            int choice = sc.nextInt();
+            String choice = sc.next();
             sc.nextLine();
 
             System.out.print("\n");
             switch (choice) {
-                case 1:
+                case "getCapacity":
                     int capacity = s.getCapacity();
                     System.out.println("Capacity of the string array: " + capacity);
                     break;
-                case 2:
+                case "exit":
                     System.out.println("Exiting...");
                     System.exit(0);
                     break;
