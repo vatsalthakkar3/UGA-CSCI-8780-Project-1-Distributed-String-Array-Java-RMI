@@ -105,7 +105,8 @@ public class Client {
                         break;
                     case 6:
                         // TODO: Writeback <i>
-                        if (s.writeBackElement(fetchedElement.get(index), index, clientId)) {
+                        boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
+                        if (op) {
                             System.out.println("🥳 Element Successfully written back.");
                         } else {
                             System.out.println("🚨 Error: Failed to write back. (You don't have write access at index "
@@ -144,5 +145,6 @@ public class Client {
             e.printStackTrace();
             System.exit(0);
         }
+
     }
 }

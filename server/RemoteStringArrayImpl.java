@@ -96,7 +96,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     @Override
     public boolean writeBackElement(String str, int index, String clientID) throws RemoteException {
         // TODO: implement writeBackElement
-        if (this.writeLock.get(index) == clientID) {
+        if (this.writeLock.get(index).equals(clientID)) {
             this.insertArrayElement(index, str);
             return true;
         }
@@ -106,9 +106,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     @Override
     public boolean requestReadLock(int index, String clientID) throws RemoteException {
         // TODO: implement requestReadLock
-        if (this.writeLock.containsKey(index) && this.writeLock.get(index) != clientID)
+        if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID)))
             return false;
-        if (this.writeLock.containsKey(index) && this.writeLock.get(index) == clientID) {
+        if (this.writeLock.containsKey(index) && this.writeLock.get(index).equals(clientID)) {
             this.writeLock.remove(index);
         }
         if (this.readLock.containsKey(index))
@@ -124,7 +124,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     @Override
     public boolean requestWriteLock(int index, String clientID) throws RemoteException {
         // TODO: implement requestWriteLock
-        if (this.writeLock.containsKey(index) && this.writeLock.get(index) != clientID) {
+        if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID))) {
             return false;
         }
 
@@ -132,7 +132,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
             return false;
         }
         if (this.readLock.containsKey(index) && this.readLock.get(index).size() == 1
-                && this.readLock.get(index).get(0) != clientID) {
+                && !(this.readLock.get(index).get(0).equals(clientID))) {
             return false;
         }
         this.writeLock.put(index, clientID);
