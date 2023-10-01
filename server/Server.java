@@ -69,6 +69,7 @@ public class Server {
 			System.exit(0);
 		} catch (Exception e) {
 			System.out.println("Server error: " + e);
+			e.printStackTrace();
 			System.exit(0);
 		}
 
