@@ -1,5 +1,6 @@
 import java.rmi.*;
 import java.rmi.server.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -11,13 +12,23 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     // Define attributes.
     private String[] stringArray;
     private Map<String, String> clientIds = new HashMap<>();
-    private Map<Integer, Arraylist<String>> readLock = new HashMap<>();
+    private Map<Integer, ArrayList<String>> readLock = new HashMap<>();
     private Map<Integer, String> writeLock = new HashMap<>();
 
     // Parametrized constructor.
-    public RemoteStringArrayImpl(int n, stringArray) throws RemoteException {
+    public RemoteStringArrayImpl(int n, String arrayOfString) throws RemoteException {
         this.stringArray = new String[n];
-        this.stringArray = stringArray;
+        String[] inputStrings = arrayOfString.split("\\s*,\\s*");
+
+        // Populate the array with the split strings
+        for (int i = 0; i < Math.min(n, inputStrings.length); i++) {
+            this.stringArray[i] = inputStrings[i].strip();
+        }
+
+        // Initialize the remaining elements with empty strings
+        for (int i = inputStrings.length; i < n; i++) {
+            this.stringArray[i] = "";
+        }
     }
 
     public boolean getReadLock(int idx, String clientId) {
@@ -56,12 +67,13 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     }
 
     @Override
-    public int readElement(int idx, String clientId) throws RemoteException {
+    public String readElement(int idx, String clientId) throws RemoteException {
         // Boolean readLock = getReadLock(idx);
         if (getReadLock(idx, clientId)) {
             return this.stringArray[idx];
-        } else
+        } else {
             return null;
+        }
     }
 
 }
