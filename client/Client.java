@@ -44,7 +44,12 @@ public class Client {
                 System.out.println("***********************************");
                 System.out.println("1. Get_Array_Capacity");
                 System.out.println("2. Fetch_Element_Read <i>");
-                System.out.println("3. Exit");
+                System.out.println("3. Fetch_Element_Write <i>");
+                System.out.println("4. Print_Element <i>");
+                System.out.println("5. Concatenate <i> Str");
+                System.out.println("6. Writeback <i>");
+                System.out.println("7. Release_Lock <i>");
+                System.out.println("8. Exit");
                 System.out.println("***********************************");
                 System.out.print("\nEnter Your Choice: ");
 
@@ -66,6 +71,21 @@ public class Client {
                             System.out.println("info: Read Element success " + readElement);
                         break;
                     case 3:
+                        // TODO: Fetch_Element_Write <i>
+                        break;
+                    case 4:
+                        // TODO: Print_Element <i>
+                        break;
+                    case 5:
+                        // TODO: Concatenate <i> Str
+                        break;
+                    case 6:
+                        // TODO: Writeback <i>
+                        break;
+                    case 7:
+                        // TODO: Release_Lock <i>
+                        break;
+                    case 8:
                         System.out.println("Exiting...");
                         System.exit(0);
                         break;

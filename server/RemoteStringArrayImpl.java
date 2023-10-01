@@ -31,15 +31,15 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         }
     }
 
-    public boolean getReadLock(int idx, String clientId) {
-        if (this.writeLock.containsKey(idx) && this.writeLock.get(idx) != clientId)
+    public boolean getReadLock(int index, String clientId) {
+        if (this.writeLock.containsKey(index) && this.writeLock.get(index) != clientId)
             return false;
-        if (this.readLock.containsKey(idx))
-            this.readLock.get(idx).add(clientId);
+        if (this.readLock.containsKey(index))
+            this.readLock.get(index).add(clientId);
         else {
             ArrayList<String> clientList = new ArrayList<>();
             clientList.add(clientId);
-            this.readLock.put(idx, clientList);
+            this.readLock.put(index, clientList);
         }
         return true;
     }
@@ -74,6 +74,47 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void insertArrayElement(int index, String str) throws RemoteException {
+        // TODO: implement insertArrayElement
+    }
+
+    @Override
+    public String fetchElementRead(int index, int clientID) throws RemoteException {
+        // TODO: implement fetchElementRead
+        return null;
+    }
+
+    @Override
+    public String fetchElementWrite(int index, int clientID) throws RemoteException {
+        // TODO: implement fetchElementWrite
+        return null;
+    }
+
+    @Override
+    public boolean writeBackElement(String str, int index, int clientID) throws RemoteException {
+        // TODO: implement writeBackElement
+        return false;
+    }
+
+    @Override
+    public boolean requestReadLock(int index, int clientID) throws RemoteException {
+        // TODO: implement requestReadLock
+        return false;
+    }
+
+    @Override
+    public boolean requestWriteLock(int index, int clientID) throws RemoteException {
+        // TODO: implement requestWriteLock
+        return false;
+    }
+
+    @Override
+    public void releaseLock(int index, int clientID) throws RemoteException {
+        // TODO: implement releaseLock
+
     }
 
 }
