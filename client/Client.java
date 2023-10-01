@@ -1,6 +1,8 @@
 import java.io.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Client {
@@ -37,7 +39,7 @@ public class Client {
             System.out.println("Your UniqueId is " + clientId);
 
             Scanner sc = new Scanner(System.in);
-
+            Map<Integer, String> fetchedElement = new HashMap<>();
             while (true) {
                 System.out.println("\n***********************************");
                 System.out.println("*             Options             *");
@@ -52,8 +54,13 @@ public class Client {
                 System.out.println("8. Exit");
                 System.out.println("***********************************");
                 System.out.print("\nEnter Your Choice: ");
-
+                String cc = null;
+                int index = -1;
                 int choice = sc.nextInt();
+                if (choice >= 2 && choice < 8) {
+                    System.out.print("\nEnter the Index of Element to fetch: ");
+                    index = sc.nextInt();
+                }
 
                 System.out.print("\n");
                 switch (choice) {
@@ -62,31 +69,61 @@ public class Client {
                         System.out.println("Capacity of the string array: " + capacity);
                         break;
                     case 2:
-                        System.out.print("Enter the Index of Element to fetch: ");
-                        int index = sc.nextInt();
-                        String readElement = s.readElement(index, clientId);
+                        String readElement = s.fetchElementRead(index, clientId);
+                        fetchedElement.put(index, readElement);
                         if (readElement == null)
-                            System.out.println("error: Failed to read " + index + "th element");
+                            System.out.println("🚨 Error: Failure reading element at index " + index);
                         else
-                            System.out.println("info: Read Element success " + readElement);
+                            System.out.println("🥳 Success: Element has been Fetched in read mode");
                         break;
                     case 3:
                         // TODO: Fetch_Element_Write <i>
+                        String writeElement = s.fetchElementWrite(index, clientId);
+                        fetchedElement.put(index, writeElement);
+                        if (writeElement == null)
+                            System.out.println("🚨 Error: Failure reading element at index " + index);
+                        else
+                            System.out.println("🥳 Success: Element has been Fetched in write mode.");
                         break;
                     case 4:
                         // TODO: Print_Element <i>
+                        if (fetchedElement.containsKey(index)) {
+                            System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
+                        } else
+                            System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                         break;
                     case 5:
                         // TODO: Concatenate <i> Str
+                        if (fetchedElement.containsKey(index)) {
+                            System.out.print("\nEnter a String to concatenate: ");
+                            cc = sc.next();
+                            String concated = fetchedElement.get(index) + cc;
+                            fetchedElement.put(index, concated);
+                            System.out.println("Concated String : " + concated);
+                        } else
+                            System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                         break;
                     case 6:
                         // TODO: Writeback <i>
+                        if (s.writeBackElement(fetchedElement.get(index), index, clientId)) {
+                            System.out.println("🥳 Element Successfully written back.");
+                        } else {
+                            System.out.println("🚨 Error: Failed to write back. (You don't have write access at index "
+                                    + index + ".)");
+                        }
                         break;
                     case 7:
                         // TODO: Release_Lock <i>
+                        s.releaseLock(index, clientId);
+                        if (fetchedElement.containsKey(index)) {
+                            fetchedElement.remove(index);
+                        }
                         break;
                     case 8:
                         System.out.println("Exiting...");
+                        for (int i = 0; i < s.getCapacity(); i++) {
+                            s.releaseLock(i, clientId);
+                        }
                         System.exit(0);
                         break;
                     default:

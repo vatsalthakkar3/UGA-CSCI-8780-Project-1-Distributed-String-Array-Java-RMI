@@ -11,16 +11,16 @@ public interface RemoteStringArray extends Remote {
 
     public void insertArrayElement(int index, String str) throws RemoteException;
 
-    public String fetchElementRead(int index, int clientID) throws RemoteException;
+    public String fetchElementRead(int index, String clientID) throws RemoteException;
 
-    public String fetchElementWrite(int index, int clientID) throws RemoteException;
+    public String fetchElementWrite(int index, String clientID) throws RemoteException;
 
-    public boolean writeBackElement(String str, int index, int clientID) throws RemoteException;
+    public boolean writeBackElement(String str, int index, String clientID) throws RemoteException;
 
-    public boolean requestReadLock(int index, int clientID) throws RemoteException;
+    public boolean requestReadLock(int index, String clientID) throws RemoteException;
 
-    public boolean requestWriteLock(int index, int clientID) throws RemoteException;
+    public boolean requestWriteLock(int index, String clientID) throws RemoteException;
 
-    public void releaseLock(int index, int clientID) throws RemoteException;
+    public void releaseLock(int index, String clientID) throws RemoteException;
 
 }
