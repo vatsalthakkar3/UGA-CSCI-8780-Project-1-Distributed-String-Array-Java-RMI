@@ -16,19 +16,8 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     private Map<Integer, String> writeLock = new HashMap<>();
 
     // Parametrized constructor.
-    public RemoteStringArrayImpl(int n, String arrayOfString) throws RemoteException {
+    public RemoteStringArrayImpl(int n) throws RemoteException {
         this.stringArray = new String[n];
-        String[] inputStrings = arrayOfString.split("\\s*,\\s*");
-
-        // Populate the array with the split strings
-        for (int i = 0; i < Math.min(n, inputStrings.length); i++) {
-            this.stringArray[i] = inputStrings[i].strip();
-        }
-
-        // Initialize the remaining elements with empty strings
-        for (int i = inputStrings.length; i < n; i++) {
-            this.stringArray[i] = "";
-        }
     }
 
     public boolean getReadLock(int index, String clientId) {
@@ -79,6 +68,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     @Override
     public void insertArrayElement(int index, String str) throws RemoteException {
         // TODO: implement insertArrayElement
+        this.stringArray[index] = str;
     }
 
     @Override

@@ -23,9 +23,10 @@ public class Server {
 			// Read Bind Name from the first line of the file
 			String bindName = reader.readLine().strip();
 			// Read the capacity from the second line of the file
-			int capacity = Integer.parseInt(reader.readLine().strip());
+			int n = Integer.parseInt(reader.readLine().strip());
 			// Read the line containing comma- and space-separated strings
 			String arrayOfString = reader.readLine().strip();
+			String[] inputStrings = arrayOfString.split("\\s*,\\s*"); // List of Strings
 			// Read hostname
 			String host = reader.readLine().strip();
 			// Read port number
@@ -37,8 +38,17 @@ public class Server {
 			System.setProperty("java.rmi.server.hostname", host);
 
 			// Create objects from RemoteStringArrayImpl.java class and share them
+			RemoteStringArrayImpl s = new RemoteStringArrayImpl(n);
 
-			RemoteStringArrayImpl s = new RemoteStringArrayImpl(capacity, arrayOfString);
+			// Populate the array with the split strings
+			for (int i = 0; i < Math.min(n, inputStrings.length); i++) {
+				s.insertArrayElement(i, inputStrings[i].strip());
+			}
+
+			// Initialize the remaining elements with empty strings
+			for (int i = inputStrings.length; i < n; i++) {
+				s.insertArrayElement(i, "");
+			}
 
 			// Export s object before registered in Registry.
 			RemoteStringArray stub1 = (RemoteStringArray) UnicastRemoteObject.exportObject(s, 0);
