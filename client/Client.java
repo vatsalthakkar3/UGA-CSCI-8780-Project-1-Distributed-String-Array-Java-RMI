@@ -77,7 +77,7 @@ public class Client {
                             System.out.println("🥳 Success: Element has been Fetched in read mode");
                         break;
                     case 3:
-                        // TODO: Fetch_Element_Write <i>
+                        // TODO: Output Formatting
                         String writeElement = s.fetchElementWrite(index, clientId);
                         fetchedElement.put(index, writeElement);
                         if (writeElement == null)
@@ -86,14 +86,14 @@ public class Client {
                             System.out.println("🥳 Success: Element has been Fetched in write mode.");
                         break;
                     case 4:
-                        // TODO: Print_Element <i>
+                        // TODO: Output Formatting
                         if (fetchedElement.containsKey(index)) {
                             System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
                         } else
                             System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                         break;
                     case 5:
-                        // TODO: Concatenate <i> Str
+                        // TODO: Output Formatting
                         if (fetchedElement.containsKey(index)) {
                             System.out.print("\nEnter a String to concatenate: ");
                             cc = sc.next();
@@ -104,7 +104,7 @@ public class Client {
                             System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                         break;
                     case 6:
-                        // TODO: Writeback <i>
+                        // TODO: Output Formatting
                         boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
                         if (op) {
                             System.out.println("🥳 Element Successfully written back.");
@@ -114,7 +114,7 @@ public class Client {
                         }
                         break;
                     case 7:
-                        // TODO: Release_Lock <i>
+                        // TODO: Output Formatting
                         s.releaseLock(index, clientId);
                         if (fetchedElement.containsKey(index)) {
                             fetchedElement.remove(index);
@@ -145,6 +145,8 @@ public class Client {
             e.printStackTrace();
             System.exit(0);
         }
+        // TODO: Implement Feature to release all the accuired locks in the situation of
+        // client error.
 
     }
 }
