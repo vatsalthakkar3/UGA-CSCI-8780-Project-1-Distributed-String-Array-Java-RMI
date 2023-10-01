@@ -93,7 +93,8 @@ public class Client {
                         System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
                         break;
                 }
-
+                System.out.println(
+                        "\n************************************************************************************************");
             }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
