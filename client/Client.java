@@ -67,12 +67,11 @@ public class Client {
                     // }
 
                     System.out.print("\n");
-                    switch (choice) {
-                        case choice.trim().equals("getSize"):
+                    if(choice.trim().equals("getSize")) {
                             int capacity = s.getCapacity();
                             System.out.println("Capacity of the string array: " + capacity);
-                            break;
-                        case choice.trim().split("\\s*")[0].equals("readFetch"):
+                        }
+                    else if(choice.trim().split("\\s*")[0].equals("readFetch")){
                             index = choice.trim().split("\\s*")[1];
                             String readElement = s.fetchElementRead(index, clientId);
                             fetchedElement.put(index, readElement);
@@ -80,8 +79,8 @@ public class Client {
                                 System.out.println("🚨 Error: Failure reading element at index " + index);
                             else
                                 System.out.println("🥳 Success: Element has been Fetched in read mode");
-                            break;
-                        case choice.trim().split("\\s*")[0].equals("writeFetch"):
+                        }
+                    else if(choice.trim().split("\\s*")[0].equals("writeFetch")) {
                             index = choice.trim().split("\\s*")[1];
                             String writeElement = s.fetchElementWrite(index, clientId);
                             fetchedElement.put(index, writeElement);
@@ -89,17 +88,16 @@ public class Client {
                                 System.out.println("🚨 Error: Failure reading element at index " + index);
                             else 
                                 System.out.println("🥳 Success: Element has been Fetched in write mode.");
-                            break;
-                        case choice.trim().split("\\s*")[0].equals("print"):
+                        }
+                    else if(choice.trim().split("\\s*")[0].equals("print")){
                             // TODO: Output Formatting
                             index = choice.trim().split("\\s*")[1];
-                            if (fetchedElement.containsKey(index)) {
+                            if (fetchedElement.containsKey(index))
                                 System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
-                            } else
+                            else
                                 System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
-                            break;
-                        case choice.trim().split("\\s*")[0].equals("cat"):
-                            // TODO: Output Formatting
+                        }
+                    else if(choice.trim().split("\\s*")[0].equals("cat")) {
                             index = choice.trim().split("\\s*")[1];
                             if (fetchedElement.containsKey(index)) {
                                 System.out.print("\nEnter a String to concatenate: ");
@@ -109,8 +107,8 @@ public class Client {
                                 System.out.println("Concated String : " + concated);
                             } else
                                 System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
-                            break;
-                        case choice.trim().split("\\s*")[0].equals("write"):
+                        }
+                    else if(choice.trim().split("\\s*")[0].equals("write")) {
                             index = choice.trim().split("\\s*")[1];
                             // TODO: Output Formatting
                             boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
@@ -121,26 +119,24 @@ public class Client {
                                         "🚨 Error: Failed to write back. (You don't have write access at index "
                                                 + index + ".)");
                             }
-                            break;
-                        case choice.trim().split("\\s*")[0].equals("release"):
+                        }
+                    else if(choice.trim().split("\\s*")[0].equals("release")) {
                             index = choice.trim().split("\\s*")[1];
                             // TODO: Output Formatting
                             s.releaseLock(index, clientId);
                             if (fetchedElement.containsKey(index)) {
                                 fetchedElement.remove(index);
                             }
-                            break;
-                        case choice.trim().split("\\s*")[0].equals("exit"):
-                            System.out.println("Exiting...");
-                            for (int i = 0; i < s.getCapacity(); i++) {
-                                s.releaseLock(i, clientId);
-                            }
-                            System.exit(0);
-                            break;
-                        default:
-                            System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
-                            break;
-                    }
+                        }
+                    else if(choice.trim().split("\\s*")[0].equals("exit")) {
+                        System.out.println("Exiting...");
+                        for (int i = 0; i < s.getCapacity(); i++) {
+                            s.releaseLock(i, clientId);
+                        }
+                        System.exit(0);
+                        }
+                    else 
+                        System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
                     System.out.println(
                             "\n************************************************************************************************");
                 }
