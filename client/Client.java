@@ -4,6 +4,7 @@ import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.lang.Thread;
 
 public class Client {
     public static void main(String[] args) {
@@ -41,9 +42,7 @@ public class Client {
             Scanner sc = new Scanner(System.in);
             Map<Integer, String> fetchedElement = new HashMap<>();
             try {
-                while (true) {
-                    
-                    System.out.println("\n***********************************");
+                System.out.println("\n***********************************");
                     System.out.println("*             Options             *");
                     System.out.println("***********************************");
                     System.out.println("1. Get_Array_Capacity");
@@ -56,6 +55,9 @@ public class Client {
                     System.out.println("8. Exit");
                     System.out.println("***********************************");
                     System.out.print("\nEnter Your Choice: ");
+                while (true) {
+                    Thread.sleep(500)
+                    
                     String cc = null;
                     int index = -1;
                     int choice = sc.nextInt();
@@ -84,7 +86,7 @@ public class Client {
                             fetchedElement.put(index, writeElement);
                             if (writeElement == null)
                                 System.out.println("🚨 Error: Failure reading element at index " + index);
-                            else
+                            else 
                                 System.out.println("🥳 Success: Element has been Fetched in write mode.");
                             break;
                         case 4:
