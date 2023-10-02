@@ -4,6 +4,7 @@ import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Client {
     public static void main(String[] args) {
@@ -59,7 +60,7 @@ public class Client {
                     int index = -1;
                     int choice = sc.nextInt();
                     if (choice >= 2 && choice < 8) {
-                        System.out.print("\nEnter the Index of Element to fetch: ");
+                        System.out.print("\nEnter the Index <i> of Element : ");
                         index = sc.nextInt();
                     }
 
@@ -72,37 +73,58 @@ public class Client {
                         case 2:
                             String readElement = s.fetchElementRead(index, clientId);
                             fetchedElement.put(index, readElement);
-                            if (readElement == null)
-                                System.out.println("🚨 Error: Failure reading element at index " + index);
-                            else
-                                System.out.println("🥳 Success: Element has been Fetched in read mode");
+                            if (readElement == null) {
+                                System.out.println(
+                                        "🚨 Error: Failed to fetch element at index " + index + " in READ mode." +
+                                                "\nThis may occur if the resource is already occupied by someone else.");
+
+                            } else {
+                                System.out.println(
+                                        "🥳 Success: Element at index " + index + " has been Fetched in READ mode.");
+                                System.out.println("Fetched Element at index " + index + " : " + readElement);
+                            }
                             break;
                         case 3:
                             // TODO: Output Formatting
                             String writeElement = s.fetchElementWrite(index, clientId);
                             fetchedElement.put(index, writeElement);
-                            if (writeElement == null)
-                                System.out.println("🚨 Error: Failure reading element at index " + index);
-                            else
-                                System.out.println("🥳 Success: Element has been Fetched in write mode.");
+                            if (writeElement == null) {
+                                System.out.println(
+                                        "🚨 Error: Failed to fetch element at index " + index + " in READ/WRITE mode." +
+                                                "\nThis may occur if the resource is already occupied by someone else.");
+                            } else {
+                                System.out.println("🥳 Success: Element at index " + index
+                                        + " has been Fetched in READ/WRITE mode.");
+                                System.out.println("Fetched Element at index " + index + " : " + writeElement);
+                            }
                             break;
                         case 4:
                             // TODO: Output Formatting
                             if (fetchedElement.containsKey(index)) {
                                 System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
-                            } else
-                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
+                            } else {
+                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
+                                        + " in READ or READ/WRITE mode.");
+                                System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
+                                        : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
+                                                .map(Object::toString).collect(Collectors.joining(" ")));
+                            }
                             break;
                         case 5:
                             // TODO: Output Formatting
                             if (fetchedElement.containsKey(index)) {
                                 System.out.print("\nEnter a String to concatenate: ");
                                 cc = sc.next();
-                                String concated = fetchedElement.get(index) + cc;
-                                fetchedElement.put(index, concated);
-                                System.out.println("Concated String : " + concated);
-                            } else
-                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
+                                cc = fetchedElement.get(index) + cc;
+                                fetchedElement.put(index, cc);
+                                System.out.println("Concated String : " + cc);
+                            } else {
+                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
+                                        + " in READ or READ/WRITE mode.");
+                                System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
+                                        : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
+                                                .map(Object::toString).collect(Collectors.joining(" ")));
+                            }
                             break;
                         case 6:
                             // TODO: Output Formatting
@@ -118,6 +140,7 @@ public class Client {
                         case 7:
                             // TODO: Output Formatting
                             s.releaseLock(index, clientId);
+                            System.out.println("Lock has been released on Element at index : " + index);
                             if (fetchedElement.containsKey(index)) {
                                 fetchedElement.remove(index);
                             }
@@ -137,7 +160,11 @@ public class Client {
                             "\n************************************************************************************************");
                 }
             } catch (Exception e) {
-                System.out.println("An error occurred: " + e.getMessage());
+                System.out.println("An error occurred: " + e);
+
+                for (int i = 0; i < s.getCapacity(); i++) {
+                    s.releaseLock(i, clientId);
+                }
 
             } finally {
                 for (int i = 0; i < s.getCapacity(); i++) {
@@ -146,7 +173,7 @@ public class Client {
             }
 
         } catch (IOException e) {
-            System.err.println("Error reading the file: " + e.getMessage());
+            System.err.println("Error reading the file: " + e);
             System.exit(0);
         } catch (NumberFormatException e) {
             System.err.println("Invalid capacity specified in the file.");
