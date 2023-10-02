@@ -63,19 +63,24 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
 
     @Override
     public String fetchElementWrite(int index, String clientID) throws RemoteException {
-        boolean op = this.requestWriteLock(index, clientID);
-        if (op) {
-            return this.stringArray[index];
-        }
+            boolean op = this.requestWriteLock(index, clientID);
+            if (op) {
+                return this.stringArray[index];
+            }
         return null;
     }
 
     @Override
     public boolean writeBackElement(String str, int index, String clientID) throws RemoteException {
-        if (this.writeLock.get(index).equals(clientID)) {
+        try {
+            if (this.writeLock.get(index).equals(clientID)) {
             this.insertArrayElement(index, str);
             System.out.println(Arrays.toString(this.stringArray));
             return true;
+            }
+        } catch(NullPointerException ne) {
+            System.out.println("error: client "+this.clientIds.get(clientID)+" never requested a write lock on element "+index+"th.")
+            ne.printStackTrace();
         }
         return false;
     }

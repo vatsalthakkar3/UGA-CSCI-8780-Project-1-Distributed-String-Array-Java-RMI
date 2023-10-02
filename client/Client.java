@@ -42,6 +42,7 @@ public class Client {
             Map<Integer, String> fetchedElement = new HashMap<>();
             try {
                 while (true) {
+                    
                     System.out.println("\n***********************************");
                     System.out.println("*             Options             *");
                     System.out.println("***********************************");
