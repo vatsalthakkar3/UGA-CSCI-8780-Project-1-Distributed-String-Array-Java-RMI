@@ -72,7 +72,7 @@ public class Client {
                             System.out.println("Capacity of the string array: " + capacity);
                         }
                     else if(choice.trim().split("\\s*")[0].equals("readFetch")){
-                            index = choice.trim().split("\\s*")[1];
+                            index = Integer.valueOf(choice.trim().split("\\s*")[1]);
                             String readElement = s.fetchElementRead(index, clientId);
                             fetchedElement.put(index, readElement);
                             if (readElement == null)
@@ -81,7 +81,7 @@ public class Client {
                                 System.out.println("🥳 Success: Element has been Fetched in read mode");
                         }
                     else if(choice.trim().split("\\s*")[0].equals("writeFetch")) {
-                            index = choice.trim().split("\\s*")[1];
+                            index = Integer.valueOf(choice.trim().split("\\s*")[1]);
                             String writeElement = s.fetchElementWrite(index, clientId);
                             fetchedElement.put(index, writeElement);
                             if (writeElement == null)
@@ -91,14 +91,14 @@ public class Client {
                         }
                     else if(choice.trim().split("\\s*")[0].equals("print")){
                             // TODO: Output Formatting
-                            index = choice.trim().split("\\s*")[1];
+                            index = Integer.valueOf(choice.trim().split("\\s*")[1]);
                             if (fetchedElement.containsKey(index))
                                 System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
                             else
                                 System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                         }
                     else if(choice.trim().split("\\s*")[0].equals("cat")) {
-                            index = choice.trim().split("\\s*")[1];
+                            index = Integer.valueOf(choice.trim().split("\\s*")[1]);
                             if (fetchedElement.containsKey(index)) {
                                 System.out.print("\nEnter a String to concatenate: ");
                                 cc = sc.next();
@@ -109,7 +109,7 @@ public class Client {
                                 System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                         }
                     else if(choice.trim().split("\\s*")[0].equals("write")) {
-                            index = choice.trim().split("\\s*")[1];
+                            index = Integer.valueOf(choice.trim().split("\\s*")[1]);
                             // TODO: Output Formatting
                             boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
                             if (op) {
