@@ -60,7 +60,7 @@ public class Client {
                     System.out.print("\nEnter Your Choice: ");
                     String cc = null;
                     String index = "";
-                    int choice = sc.nextLine();
+                    String choice = sc.nextLine();
                     // if (choice >= 2 && choice < 8) {
                     //     System.out.print("\nEnter the Index of Element to fetch: ");
                     //     index = sc.nextInt();
