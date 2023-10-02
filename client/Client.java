@@ -43,20 +43,20 @@ public class Client {
             Map<Integer, String> fetchedElement = new HashMap<>();
             try {
                 System.out.println("\n***********************************");
-                    System.out.println("*             Options             *");
-                    System.out.println("***********************************");
-                    System.out.println("1. Get_Array_Capacity");
-                    System.out.println("2. Fetch_Element_Read <i>");
-                    System.out.println("3. Fetch_Element_Write <i>");
-                    System.out.println("4. Print_Element <i>");
-                    System.out.println("5. Concatenate <i> Str");
-                    System.out.println("6. Writeback <i>");
-                    System.out.println("7. Release_Lock <i>");
-                    System.out.println("8. Exit");
-                    System.out.println("***********************************");
-                    System.out.print("\nEnter Your Choice: ");
+                System.out.println("*             Options             *");
+                System.out.println("***********************************");
+                System.out.println("1. Get_Array_Capacity");
+                System.out.println("2. Fetch_Element_Read <i>");
+                System.out.println("3. Fetch_Element_Write <i>");
+                System.out.println("4. Print_Element <i>");
+                System.out.println("5. Concatenate <i> Str");
+                System.out.println("6. Writeback <i>");
+                System.out.println("7. Release_Lock <i>");
+                System.out.println("8. Exit");
+                System.out.println("***********************************");
+                System.out.print("\nEnter Your Choice: ");
                 while (true) {
-                    Thread.sleep(500)
+                    Thread.sleep(500);
                     
                     String cc = null;
                     int index = -1;
