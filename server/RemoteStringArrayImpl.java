@@ -79,7 +79,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
             return true;
             }
         } catch(NullPointerException ne) {
-            System.out.println("error: client "+this.clientIds.get(clientID)+" never requested a write lock on element "+index+"th.")
+            System.out.println("error: client "+this.clientIds.get(clientID)+" never requested a write lock on element "+index+"th.");
             ne.printStackTrace();
         }
         return false;
