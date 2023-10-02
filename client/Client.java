@@ -156,8 +156,6 @@ public class Client {
             e.printStackTrace();
             System.exit(0);
         }
-        // TODO: Implement Feature to release all the accuired locks in the situation of
-        // client error.
 
     }
 }
