@@ -121,7 +121,7 @@ public class Client {
                             }
                         }
                     else if(choice.trim().split("\\s*")[0].equals("release")) {
-                            index = choice.trim().split("\\s*")[1];
+                            index = Integer.valueOf(choice.trim().split("\\s*")[1]);
                             // TODO: Output Formatting
                             s.releaseLock(index, clientId);
                             if (fetchedElement.containsKey(index)) {
