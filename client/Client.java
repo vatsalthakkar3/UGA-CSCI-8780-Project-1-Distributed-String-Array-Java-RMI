@@ -45,9 +45,9 @@ public class Client {
                 System.out.println("\n***********************************");
                 System.out.println("*             Options             *");
                 System.out.println("***********************************");
-                System.out.println("1. getSize");
-                System.out.println("2. readFetch <i>");
-                System.out.println("3. writeFetch <i>");
+                System.out.println("1. getsize");
+                System.out.println("2. readF <i>");
+                System.out.println("3. writeF <i>");
                 System.out.println("4. print <i>");
                 System.out.println("5. cat <i> Str");
                 System.out.println("6. write <i>");
@@ -67,11 +67,11 @@ public class Client {
                     // }
 
                     System.out.print("\n");
-                    if(choice.trim().equals("getSize")) {
+                    if(choice.trim().equals("getsize")) {
                             int capacity = s.getCapacity();
                             System.out.println("Capacity of the string array: " + capacity);
                         }
-                    else if(choice.trim().split("\\s+")[0].equals("readFetch")){
+                    else if(choice.trim().split("\\s+")[0].equals("readf")){
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String readElement = s.fetchElementRead(index, clientId);
                             fetchedElement.put(index, readElement);
@@ -80,7 +80,7 @@ public class Client {
                             else
                                 System.out.println("🥳 Success: Element has been Fetched in read mode");
                         }
-                    else if(choice.trim().split("\\s+")[0].equals("writeFetch")) {
+                    else if(choice.trim().split("\\s+")[0].equals("writef")) {
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String writeElement = s.fetchElementWrite(index, clientId);
                             fetchedElement.put(index, writeElement);
