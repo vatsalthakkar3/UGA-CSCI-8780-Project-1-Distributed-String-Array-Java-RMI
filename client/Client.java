@@ -54,10 +54,10 @@ public class Client {
                 System.out.println("7. Release_Lock <i>");
                 System.out.println("8. Exit");
                 System.out.println("***********************************");
-                System.out.print("\nEnter Your Choice: ");
+                
                 while (true) {
                     Thread.sleep(500);
-                    
+                    System.out.print("\nEnter Your Choice: ");
                     String cc = null;
                     int index = -1;
                     int choice = sc.nextInt();
