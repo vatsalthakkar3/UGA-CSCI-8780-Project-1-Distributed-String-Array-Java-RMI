@@ -23,8 +23,8 @@ cd server
 ```
 Then, start the RMI Registry on port 9100:
 
-```bash
-rmiregistry 9100
+```bash 
+rmiregistry 9100  //make sure you are running this command in the same directory as server
 ```
 ### Step 3: Start the Server
 

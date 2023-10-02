@@ -73,6 +73,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     public boolean writeBackElement(String str, int index, String clientID) throws RemoteException {
         if (this.writeLock.get(index).equals(clientID)) {
             this.insertArrayElement(index, str);
+            System.out.println(Arrays.toString(this.stringArray));
             return true;
         }
         return false;
