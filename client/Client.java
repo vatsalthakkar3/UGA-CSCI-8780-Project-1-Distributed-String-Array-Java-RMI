@@ -135,8 +135,10 @@ public class Client {
                         }
                         System.exit(0);
                         }
-                    else 
-                        System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
+                    else {
+                        if(!choice.equals(""))
+                            System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
+                    }
                     System.out.println(
                             "\n************************************************************************************************");
                 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RemoteStringArrayImpl implements RemoteStringArray {
 
@@ -13,8 +14,8 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     // Define attributes.
     private String[] stringArray;
     private Map<String, String> clientIds = new HashMap<>();
-    private Map<Integer, ArrayList<String>> readLock = new HashMap<>();
-    private Map<Integer, String> writeLock = new HashMap<>();
+    private HashMap<Integer, ArrayList<String>> readLock = new HashMap<>();
+    private ConcurrentHashMap<Integer, String> writeLock = new ConcurrentHashMap<>();
 
     // Parametrized constructor.
     public RemoteStringArrayImpl(int n) throws RemoteException {
