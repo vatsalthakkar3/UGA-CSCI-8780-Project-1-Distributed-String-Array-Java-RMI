@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Arrays;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RemoteStringArrayImpl implements RemoteStringArray {
 
@@ -12,8 +14,8 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     // Define attributes.
     private String[] stringArray;
     private Map<String, String> clientIds = new HashMap<>();
-    private Map<Integer, ArrayList<String>> readLock = new HashMap<>();
-    private Map<Integer, String> writeLock = new HashMap<>();
+    private HashMap<Integer, ArrayList<String>> readLock = new HashMap<>();
+    private ConcurrentHashMap<Integer, String> writeLock = new ConcurrentHashMap<>();
 
     // Parametrized constructor.
     public RemoteStringArrayImpl(int n) throws RemoteException {
@@ -62,18 +64,25 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
 
     @Override
     public String fetchElementWrite(int index, String clientID) throws RemoteException {
-        boolean op = this.requestWriteLock(index, clientID);
-        if (op) {
-            return this.stringArray[index];
-        }
+            boolean op = this.requestWriteLock(index, clientID);
+            if (op) {
+                return this.stringArray[index];
+            }
         return null;
     }
 
     @Override
     public boolean writeBackElement(String str, int index, String clientID) throws RemoteException {
+
+        try {
         if (this.writeLock.containsKey(index) && writeLock.get(index).equals(clientID)) {
             this.insertArrayElement(index, str);
+            System.out.println(Arrays.toString(this.stringArray));
             return true;
+            }
+        } catch(NullPointerException ne) {
+            System.out.println("error: client "+this.clientIds.get(clientID)+" never requested a write lock on element "+index+"th.");
+            // ne.printStackTrace();
         }
         return false;
     }

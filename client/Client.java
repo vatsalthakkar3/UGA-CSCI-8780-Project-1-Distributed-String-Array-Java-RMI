@@ -4,7 +4,10 @@ import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import java.lang.Thread;
 import java.util.stream.Collectors;
+
 
 public class Client {
     public static void main(String[] args) {
@@ -42,38 +45,42 @@ public class Client {
             Scanner sc = new Scanner(System.in);
             Map<Integer, String> fetchedElement = new HashMap<>();
             try {
+                System.out.println("\n***********************************");
+                System.out.println("*             Options             *");
+                System.out.println("***********************************");
+                System.out.println("1. getsize");
+                System.out.println("2. readF <i>");
+                System.out.println("3. writeF <i>");
+                System.out.println("4. print <i>");
+                System.out.println("5. cat <i> Str");
+                System.out.println("6. write <i>");
+                System.out.println("7. release <i>");
+                System.out.println("8. exit");
+                System.out.println("***********************************");
+                
                 while (true) {
-                    System.out.println("\n***********************************");
-                    System.out.println("*             Options             *");
-                    System.out.println("***********************************");
-                    System.out.println("1. Get_Array_Capacity");
-                    System.out.println("2. Fetch_Element_Read <i>");
-                    System.out.println("3. Fetch_Element_Write <i>");
-                    System.out.println("4. Print_Element <i>");
-                    System.out.println("5. Concatenate <i> Str");
-                    System.out.println("6. Writeback <i>");
-                    System.out.println("7. Release_Lock <i>");
-                    System.out.println("8. Exit");
-                    System.out.println("***********************************");
+                    Thread.sleep(500);
                     System.out.print("\nEnter Your Choice: ");
                     String cc = null;
                     int index = -1;
-                    int choice = sc.nextInt();
-                    if (choice >= 2 && choice < 8) {
-                        System.out.print("\nEnter the Index <i> of Element : ");
-                        index = sc.nextInt();
-                    }
+
+                    String choice = sc.nextLine();
+                    // if (choice >= 2 && choice < 8) {
+                    //     System.out.print("\nEnter the Index of Element to fetch: ");
+                    //     index = sc.nextInt();
+                    // }
+
 
                     System.out.print("\n");
-                    switch (choice) {
-                        case 1:
+                    if(choice.trim().equals("getsize")) {
                             int capacity = s.getCapacity();
                             System.out.println("Capacity of the string array: " + capacity);
-                            break;
-                        case 2:
+                        }
+                    else if(choice.trim().split("\\s+")[0].equals("readf")){
+                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String readElement = s.fetchElementRead(index, clientId);
                             fetchedElement.put(index, readElement);
-                            if (readElement == null) {
+                           if (readElement == null) {
                                 System.out.println(
                                         "🚨 Error: Failed to fetch element at index " + index + " in READ mode." +
                                                 "\nThis may occur if the resource is already occupied by someone else.");
@@ -83,12 +90,12 @@ public class Client {
                                         "🥳 Success: Element at index " + index + " has been Fetched in READ mode.");
                                 System.out.println("Fetched Element at index " + index + " : " + readElement);
                             }
-                            break;
-                        case 3:
-                            // TODO: Output Formatting
+                        }
+                    else if(choice.trim().split("\\s+")[0].equals("writef")) {
+                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String writeElement = s.fetchElementWrite(index, clientId);
                             fetchedElement.put(index, writeElement);
-                            if (writeElement == null) {
+                           if (writeElement == null) {
                                 System.out.println(
                                         "🚨 Error: Failed to fetch element at index " + index + " in READ/WRITE mode." +
                                                 "\nThis may occur if the resource is already occupied by someone else.");
@@ -97,9 +104,11 @@ public class Client {
                                         + " has been Fetched in READ/WRITE mode.");
                                 System.out.println("Fetched Element at index " + index + " : " + writeElement);
                             }
-                            break;
-                        case 4:
+                        }
+                    else if(choice.trim().split("\\s+")[0].equals("print")){
+
                             // TODO: Output Formatting
+                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             if (fetchedElement.containsKey(index)) {
                                 System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
                             } else {
@@ -109,24 +118,25 @@ public class Client {
                                         : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
                                                 .map(Object::toString).collect(Collectors.joining(" ")));
                             }
-                            break;
-                        case 5:
-                            // TODO: Output Formatting
+                        }
+                    else if(choice.trim().split("\\s+")[0].equals("cat")) {
+                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             if (fetchedElement.containsKey(index)) {
                                 System.out.print("\nEnter a String to concatenate: ");
                                 cc = sc.next();
-                                cc = fetchedElement.get(index) + cc;
-                                fetchedElement.put(index, cc);
-                                System.out.println("Concated String : " + cc);
-                            } else {
+                                String concated = fetchedElement.get(index) + cc;
+                                fetchedElement.put(index, concated);
+                                System.out.println("Concated String : " + concated);
+                            } else
                                 System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
                                         + " in READ or READ/WRITE mode.");
                                 System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
                                         : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
                                                 .map(Object::toString).collect(Collectors.joining(" ")));
-                            }
-                            break;
-                        case 6:
+                        }
+                    else if(choice.trim().split("\\s+")[0].equals("write")) {
+                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+
                             // TODO: Output Formatting
                             boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
                             if (op) {
@@ -136,26 +146,27 @@ public class Client {
                                         "🚨 Error: Failed to write back. (You don't have write access at index "
                                                 + index + ".)");
                             }
-                            break;
-                        case 7:
+                        }
+                    else if(choice.trim().split("\\s+")[0].equals("release")) {
+                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             // TODO: Output Formatting
                             s.releaseLock(index, clientId);
                             System.out.println("Lock has been released on Element at index : " + index);
                             if (fetchedElement.containsKey(index)) {
                                 fetchedElement.remove(index);
                             }
-                            break;
-                        case 8:
-                            System.out.println("Exiting...");
-                            for (int i = 0; i < s.getCapacity(); i++) {
-                                s.releaseLock(i, clientId);
-                            }
-                            System.exit(0);
-                            break;
-                        default:
+                        }
+                    else if(choice.trim().split("\\s+")[0].equals("exit")) {
+                        System.out.println("Exiting...");
+                        for (int i = 0; i < s.getCapacity(); i++) {
+                            s.releaseLock(i, clientId);
+                        }
+                        System.exit(0);
+                        }
+                    else {
+                        if(!choice.equals(""))
                             System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
-                            break;
-                    }
+                        }
                     System.out.println(
                             "\n************************************************************************************************");
                 }
