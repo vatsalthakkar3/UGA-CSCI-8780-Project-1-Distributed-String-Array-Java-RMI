@@ -45,34 +45,35 @@ public class Client {
                 System.out.println("\n***********************************");
                 System.out.println("*             Options             *");
                 System.out.println("***********************************");
-                System.out.println("1. Get_Array_Capacity");
-                System.out.println("2. Fetch_Element_Read <i>");
-                System.out.println("3. Fetch_Element_Write <i>");
-                System.out.println("4. Print_Element <i>");
-                System.out.println("5. Concatenate <i> Str");
-                System.out.println("6. Writeback <i>");
-                System.out.println("7. Release_Lock <i>");
-                System.out.println("8. Exit");
+                System.out.println("1. getSize");
+                System.out.println("2. readFetch <i>");
+                System.out.println("3. writeFetch <i>");
+                System.out.println("4. print <i>");
+                System.out.println("5. cat <i> Str");
+                System.out.println("6. write <i>");
+                System.out.println("7. release <i>");
+                System.out.println("8. exit");
                 System.out.println("***********************************");
                 
                 while (true) {
                     Thread.sleep(500);
                     System.out.print("\nEnter Your Choice: ");
                     String cc = null;
-                    int index = -1;
-                    int choice = sc.nextInt();
-                    if (choice >= 2 && choice < 8) {
-                        System.out.print("\nEnter the Index of Element to fetch: ");
-                        index = sc.nextInt();
-                    }
+                    String index = "";
+                    int choice = sc.nextLine();
+                    // if (choice >= 2 && choice < 8) {
+                    //     System.out.print("\nEnter the Index of Element to fetch: ");
+                    //     index = sc.nextInt();
+                    // }
 
                     System.out.print("\n");
                     switch (choice) {
-                        case 1:
+                        case choice.trim().equals("getSize"):
                             int capacity = s.getCapacity();
                             System.out.println("Capacity of the string array: " + capacity);
                             break;
-                        case 2:
+                        case choice.trim().split("\\s*")[0].equals("readFetch"):
+                            index = choice.trim().split("\\s*")[1];
                             String readElement = s.fetchElementRead(index, clientId);
                             fetchedElement.put(index, readElement);
                             if (readElement == null)
@@ -80,8 +81,8 @@ public class Client {
                             else
                                 System.out.println("🥳 Success: Element has been Fetched in read mode");
                             break;
-                        case 3:
-                            // TODO: Output Formatting
+                        case choice.trim().split("\\s*")[0].equals("writeFetch"):
+                            index = choice.trim().split("\\s*")[1];
                             String writeElement = s.fetchElementWrite(index, clientId);
                             fetchedElement.put(index, writeElement);
                             if (writeElement == null)
@@ -89,15 +90,17 @@ public class Client {
                             else 
                                 System.out.println("🥳 Success: Element has been Fetched in write mode.");
                             break;
-                        case 4:
+                        case choice.trim().split("\\s*")[0].equals("print"):
                             // TODO: Output Formatting
+                            index = choice.trim().split("\\s*")[1];
                             if (fetchedElement.containsKey(index)) {
                                 System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
                             } else
                                 System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                             break;
-                        case 5:
+                        case choice.trim().split("\\s*")[0].equals("cat"):
                             // TODO: Output Formatting
+                            index = choice.trim().split("\\s*")[1];
                             if (fetchedElement.containsKey(index)) {
                                 System.out.print("\nEnter a String to concatenate: ");
                                 cc = sc.next();
@@ -107,7 +110,8 @@ public class Client {
                             } else
                                 System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
                             break;
-                        case 6:
+                        case choice.trim().split("\\s*")[0].equals("write"):
+                            index = choice.trim().split("\\s*")[1];
                             // TODO: Output Formatting
                             boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
                             if (op) {
@@ -118,14 +122,15 @@ public class Client {
                                                 + index + ".)");
                             }
                             break;
-                        case 7:
+                        case choice.trim().split("\\s*")[0].equals("release"):
+                            index = choice.trim().split("\\s*")[1];
                             // TODO: Output Formatting
                             s.releaseLock(index, clientId);
                             if (fetchedElement.containsKey(index)) {
                                 fetchedElement.remove(index);
                             }
                             break;
-                        case 8:
+                        case choice.trim().split("\\s*")[0].equals("exit"):
                             System.out.println("Exiting...");
                             for (int i = 0; i < s.getCapacity(); i++) {
                                 s.releaseLock(i, clientId);
