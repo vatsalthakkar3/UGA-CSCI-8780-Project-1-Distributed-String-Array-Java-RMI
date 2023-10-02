@@ -4,7 +4,10 @@ import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
 import java.lang.Thread;
+import java.util.stream.Collectors;
+
 
 public class Client {
     public static void main(String[] args) {
@@ -60,11 +63,13 @@ public class Client {
                     System.out.print("\nEnter Your Choice: ");
                     String cc = null;
                     int index = -1;
+
                     String choice = sc.nextLine();
                     // if (choice >= 2 && choice < 8) {
                     //     System.out.print("\nEnter the Index of Element to fetch: ");
                     //     index = sc.nextInt();
                     // }
+
 
                     System.out.print("\n");
                     if(choice.trim().equals("getsize")) {
@@ -75,27 +80,44 @@ public class Client {
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String readElement = s.fetchElementRead(index, clientId);
                             fetchedElement.put(index, readElement);
-                            if (readElement == null)
-                                System.out.println("🚨 Error: Failure reading element at index " + index);
-                            else
-                                System.out.println("🥳 Success: Element has been Fetched in read mode");
+                           if (readElement == null) {
+                                System.out.println(
+                                        "🚨 Error: Failed to fetch element at index " + index + " in READ mode." +
+                                                "\nThis may occur if the resource is already occupied by someone else.");
+
+                            } else {
+                                System.out.println(
+                                        "🥳 Success: Element at index " + index + " has been Fetched in READ mode.");
+                                System.out.println("Fetched Element at index " + index + " : " + readElement);
+                            }
                         }
                     else if(choice.trim().split("\\s+")[0].equals("writef")) {
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String writeElement = s.fetchElementWrite(index, clientId);
                             fetchedElement.put(index, writeElement);
-                            if (writeElement == null)
-                                System.out.println("🚨 Error: Failure reading element at index " + index);
-                            else 
-                                System.out.println("🥳 Success: Element has been Fetched in write mode.");
+                           if (writeElement == null) {
+                                System.out.println(
+                                        "🚨 Error: Failed to fetch element at index " + index + " in READ/WRITE mode." +
+                                                "\nThis may occur if the resource is already occupied by someone else.");
+                            } else {
+                                System.out.println("🥳 Success: Element at index " + index
+                                        + " has been Fetched in READ/WRITE mode.");
+                                System.out.println("Fetched Element at index " + index + " : " + writeElement);
+                            }
                         }
                     else if(choice.trim().split("\\s+")[0].equals("print")){
+
                             // TODO: Output Formatting
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
-                            if (fetchedElement.containsKey(index))
+                            if (fetchedElement.containsKey(index)) {
                                 System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
-                            else
-                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
+                            } else {
+                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
+                                        + " in READ or READ/WRITE mode.");
+                                System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
+                                        : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
+                                                .map(Object::toString).collect(Collectors.joining(" ")));
+                            }
                         }
                     else if(choice.trim().split("\\s+")[0].equals("cat")) {
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
@@ -106,10 +128,15 @@ public class Client {
                                 fetchedElement.put(index, concated);
                                 System.out.println("Concated String : " + concated);
                             } else
-                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index);
+                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
+                                        + " in READ or READ/WRITE mode.");
+                                System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
+                                        : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
+                                                .map(Object::toString).collect(Collectors.joining(" ")));
                         }
                     else if(choice.trim().split("\\s+")[0].equals("write")) {
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+
                             // TODO: Output Formatting
                             boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
                             if (op) {
@@ -124,6 +151,7 @@ public class Client {
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             // TODO: Output Formatting
                             s.releaseLock(index, clientId);
+                            System.out.println("Lock has been released on Element at index : " + index);
                             if (fetchedElement.containsKey(index)) {
                                 fetchedElement.remove(index);
                             }
@@ -138,12 +166,16 @@ public class Client {
                     else {
                         if(!choice.equals(""))
                             System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
-                    }
+                        }
                     System.out.println(
                             "\n************************************************************************************************");
                 }
             } catch (Exception e) {
-                System.out.println("An error occurred: " + e.getMessage());
+                System.out.println("An error occurred: " + e);
+
+                for (int i = 0; i < s.getCapacity(); i++) {
+                    s.releaseLock(i, clientId);
+                }
 
             } finally {
                 for (int i = 0; i < s.getCapacity(); i++) {
@@ -152,7 +184,7 @@ public class Client {
             }
 
         } catch (IOException e) {
-            System.err.println("Error reading the file: " + e.getMessage());
+            System.err.println("Error reading the file: " + e);
             System.exit(0);
         } catch (NumberFormatException e) {
             System.err.println("Invalid capacity specified in the file.");
