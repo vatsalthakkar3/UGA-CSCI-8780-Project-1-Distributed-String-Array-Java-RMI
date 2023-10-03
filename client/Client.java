@@ -49,8 +49,8 @@ public class Client {
                 System.out.println("*             Options             *");
                 System.out.println("***********************************");
                 System.out.println("1. getsize");
-                System.out.println("2. readF <i>");
-                System.out.println("3. writeF <i>");
+                System.out.println("2. readf <i>");
+                System.out.println("3. writef <i>");
                 System.out.println("4. print <i>");
                 System.out.println("5. cat <i> Str");
                 System.out.println("6. write <i>");
