@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="csci-8780-advanced-distributed-systems---project-1-distributed-string-array-with-concurrency-control-java-rmi">CSCI-8780 Advanced Distributed Systems - Project 1: Distributed String Array with Concurrency Control (JAVA RMI)</h1>
+<h2 id="list-of-team-members">List of Team Members</h2>
+<ul>
+<li>Ratish Jha</li>
+<li>vatsal Thakkar</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before you begin, make sure you have the following installed:</p>
+<ul>
+<li>Java Development Kit - 17 (JDK -17)</li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<p>Follow these steps to set up and run the project:</p>
+<h3 id="step-1-open-three-terminals">Step 1: Open Three Terminals</h3>
+<p>Open three separate terminal windows or command prompts.</p>
+<h3 id="step-2-start-the-rmi-registry">Step 2: Start the RMI Registry</h3>
+<p>In the first terminal, navigate to the 'server' directory:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
+</div></code></pre>
+<p>Then, start the RMI Registry on port 9100 (You can use any port but make sure to change the port in <code>server-config.txt</code> and <code>client-config.txt</code> files):</p>
+<pre class="hljs"><code><div>rmiregistry 9100
+</div></code></pre>
+<h3 id="step-3-start-the-server">Step 3: Start the Server</h3>
+<p>In the second terminal, navigate to the 'server' directory:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
+</div></code></pre>
+<p>Compile the server code:</p>
+<pre class="hljs"><code><div>javac *.java
+</div></code></pre>
+<p>Start the server:</p>
+<pre class="hljs"><code><div>java Server server-config.txt
+</div></code></pre>
+<h3 id="step-4-start-the-client">Step 4: Start the Client</h3>
+<p>In the third terminal, navigate to the 'client' directory</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> client
+</div></code></pre>
+<p>Compile the client code:</p>
+<pre class="hljs"><code><div>javac *.java
+</div></code></pre>
+<p>Start the client and interact with server:</p>
+<pre class="hljs"><code><div>java Client client-config.txt
+</div></code></pre>
+<h2 id="configuration-file-server-configtxt--client-configtxt">Configuration File (server-config.txt &amp; client-config.txt)</h2>
+<p>The <code>client-config.txt</code> &amp; <code>server-config.txt</code> file is used to configure the client and server applications for interacting with a distributed string array. This file contains important information such as the server's host and port details, the array's initial capacity, and other configuration parameters.</p>
+<h3 id="format-server-configtxt">Format (server-config.txt)</h3>
+<p>The <code>server-config.txt</code> file follows a specific format with each line serving a distinct purpose:</p>
+<ol>
+<li>
+<p><strong>Bind Name (rsa):</strong> The first line specifies the bind name (<code>rsa</code>) under which the Remote String Array will be registered on the RMI registry. This name is crucial for the client to look up and communicate with the server's Remote String Array.</p>
+</li>
+<li>
+<p><strong>Remote String Array Capacity:</strong> The second line indicates the initial capacity of the Remote String Array. This value represents the maximum number of elements that can be stored in the array.</p>
+</li>
+<li>
+<p><strong>Array Initialization:</strong> The third line allows you to initialize the array with a list of comma-separated strings. These strings will populate the array's elements. If there are fewer strings than the specified capacity, the remaining elements will be initialized as <code>&quot;&quot;(Empty String)</code>. This line is optional, and you can leave it empty if you don't want to initialize the array during startup.</p>
+</li>
+<li>
+<p><strong>Host:</strong> The fourth line specifies the IP address or hostname where the RMI registry is located. It's essential for the client to know the server's location to establish a connection.</p>
+</li>
+<li>
+<p><strong>Port:</strong> The fifth line designates the port number on which the RMI registry is listening. This port number is crucial for client-server communication.</p>
+</li>
+</ol>
+<h3 id="format-client-configtxt">Format (client-config.txt)</h3>
+<p>The <code>server-config.txt</code> file follows a specific format with each line serving a distinct purpose:</p>
+<ol>
+<li>
+<p><strong>Bind Name (rsa):</strong> The first line specifies the bind name (<code>rsa</code>) under which the Remote String Array will be registered on the RMI registry. This name is crucial for the client to look up and communicate with the server's Remote String Array.</p>
+</li>
+<li>
+<p><strong>Host:</strong> The fourth line specifies the IP address or hostname where the RMI registry is located. It's essential for the client to know the server's location to establish a connection.</p>
+</li>
+<li>
+<p><strong>Port:</strong> The fifth line designates the port number on which the RMI registry is listening. This port number is crucial for client-server communication.</p>
+</li>
+</ol>
+<h3 id="example-configuration">Example Configuration</h3>
+<p>Here's an example <code>server-config.txt</code> file:</p>
+<pre class="hljs"><code><div>rsa
+5
+Apple, Pineapple, Mango
+127.0.0.1
+9100
+</div></code></pre>
+<p>Here's an example <code>client-config.txt</code> file:</p>
+<pre class="hljs"><code><div>rsa
+127.0.0.1
+9100
+</div></code></pre>
+<h2 id="usage">Usage</h2>
+<p>Once the server and client are running, you can interact with the Distributed String Array with Concurrency Control. Follow the prompts in the client application to perform various operations on the distributed string array.</p>
+
+</body>
+</html>
