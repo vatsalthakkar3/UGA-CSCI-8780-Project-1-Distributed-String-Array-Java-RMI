@@ -6,7 +6,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
-
+/**
+ * The RemoteStringArrayImpl class implements the RemoteStringArray interface and provides
+ * remote methods for interacting with a distributed string array.
+ *
+ * @author Ratish Jha
+ * @author Vatsal Thakkar
+ */
 public class RemoteStringArrayImpl implements RemoteStringArray {
 
     // Define attributes and implement all the methods defined in product interface.
@@ -17,11 +23,21 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     private HashMap<Integer, ArrayList<String>> readLock = new HashMap<>();
     private ConcurrentHashMap<Integer, String> writeLock = new ConcurrentHashMap<>();
 
-    // Parametrized constructor.
+    /**
+     * Parameterized constructor to initialize the RemoteStringArrayImpl.
+     *
+     * @param n The capacity of the string array.
+     * @throws RemoteException if there is a problem with remote object creation.
+     */
     public RemoteStringArrayImpl(int n) throws RemoteException {
         this.stringArray = new String[n];
     }
 
+    // Implementation of RemoteStringArray interface methods...
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String sayHello() throws RemoteException {
         String uniqueId = UUID.randomUUID().toString();
@@ -32,11 +48,17 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         return uniqueId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getCapacity() throws RemoteException {
         return this.stringArray.length;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String readElement(int idx, String clientId) throws RemoteException {
         // Boolean readLock = getReadLock(idx);
@@ -47,11 +69,17 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertArrayElement(int index, String str) throws RemoteException {
         this.stringArray[index] = str;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String fetchElementRead(int index, String clientID) throws RemoteException {
         boolean op = this.requestReadLock(index, clientID);
@@ -62,6 +90,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String fetchElementWrite(int index, String clientID) throws RemoteException {
             boolean op = this.requestWriteLock(index, clientID);
@@ -71,6 +102,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean writeBackElement(String str, int index, String clientID) throws RemoteException {
 
@@ -91,6 +125,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean requestReadLock(int index, String clientID) throws RemoteException {
         if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID)))
@@ -108,6 +145,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean requestWriteLock(int index, String clientID) throws RemoteException {
         if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID))) {
@@ -125,6 +165,9 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void releaseLock(int index, String clientID) throws RemoteException {
         if (this.writeLock.containsKey(index) && this.writeLock.get(index).equals(clientID)) { //release writeLock only if client requested is the one who has the lock 

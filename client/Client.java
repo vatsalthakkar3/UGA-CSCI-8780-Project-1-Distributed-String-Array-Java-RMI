@@ -8,8 +8,22 @@ import java.util.Scanner;
 import java.lang.Thread;
 import java.util.stream.Collectors;
 
+/**
+ * The `Client` class represents a client application that interacts with a remote
+ * server to manipulate a distributed string array. It reads commands from the user,
+ * communicates with the server, and performs various operations on the array.
+ * 
+ * @author Ratish Jha
+ * @author Vatsal Thakkar
+ */
 
 public class Client {
+    /**
+     * The main method for the `Client` class.
+     *
+     * @param args Command-line arguments; expects a single argument: the path to
+     *             the configuration file.
+     */
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println("Usage: java Client <config_file>\nFor Example: java Client client-config.txt");

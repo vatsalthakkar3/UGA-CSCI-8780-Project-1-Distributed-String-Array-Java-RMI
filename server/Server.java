@@ -1,3 +1,9 @@
+/**
+ * The Server class initializes and starts an RMI server based on the configuration
+ * specified in a provided file.
+ * @author Ratish Jha
+ * @author Vatsal Thakkar
+ */
 
 // package Server;
 import java.io.*;
@@ -6,6 +12,12 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class Server {
+	/**
+     * The main method of the Server class.
+     *
+     * @param args Command-line arguments; expects a single argument: the path to
+     *             the configuration file.
+     */
 	public static void main(String[] args) {
 		if (args.length != 1) {
 			System.err.println("Usage: java Server <config_file>\nFor Example: java Server server-config.txt");
