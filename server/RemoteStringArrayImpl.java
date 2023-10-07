@@ -80,6 +80,10 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
             System.out.println(Arrays.toString(this.stringArray));
             return true;
             }
+        else{
+            return false;
+        }
+            
         } catch(NullPointerException ne) {
             System.out.println("error: client "+this.clientIds.get(clientID)+" never requested a write lock on element "+index+"th.");
             // ne.printStackTrace();
