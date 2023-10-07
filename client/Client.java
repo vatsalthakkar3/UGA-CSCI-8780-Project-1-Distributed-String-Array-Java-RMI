@@ -79,13 +79,14 @@ public class Client {
                     else if(choice.trim().split("\\s+")[0].equals("readf")){
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String readElement = s.fetchElementRead(index, clientId);
-                            fetchedElement.put(index, readElement);
+                            
                            if (readElement == null) {
                                 System.out.println(
                                         "🚨 Error: Failed to fetch element at index " + index + " in READ mode." +
                                                 "\nThis may occur if the resource is already occupied by someone else.");
 
                             } else {
+                                fetchedElement.put(index, readElement);
                                 System.out.println(
                                         "🥳 Success: Element at index " + index + " has been Fetched in READ mode.");
                                 System.out.println("Fetched Element at index " + index + " : " + readElement);
@@ -94,12 +95,13 @@ public class Client {
                     else if(choice.trim().split("\\s+")[0].equals("writef")) {
                             index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                             String writeElement = s.fetchElementWrite(index, clientId);
-                            fetchedElement.put(index, writeElement);
+                            
                            if (writeElement == null) {
                                 System.out.println(
                                         "🚨 Error: Failed to fetch element at index " + index + " in READ/WRITE mode." +
                                                 "\nThis may occur if the resource is already occupied by someone else.");
                             } else {
+                                fetchedElement.put(index, writeElement);
                                 System.out.println("🥳 Success: Element at index " + index
                                         + " has been Fetched in READ/WRITE mode.");
                                 System.out.println("Fetched Element at index " + index + " : " + writeElement);

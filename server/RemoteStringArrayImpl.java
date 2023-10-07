@@ -127,7 +127,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
 
     @Override
     public void releaseLock(int index, String clientID) throws RemoteException {
-        if (this.writeLock.containsKey(index) && this.writeLock.get(index) == clientID) { //release writeLock only if client requested is the one who has the lock 
+        if (this.writeLock.containsKey(index) && this.writeLock.get(index).equals(clientID)) { //release writeLock only if client requested is the one who has the lock 
             this.writeLock.remove(index);
         }
         if (this.readLock.containsKey(index) && this.readLock.get(index).contains(clientID)) {
