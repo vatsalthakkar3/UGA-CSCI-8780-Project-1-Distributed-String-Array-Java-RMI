@@ -1,9 +1,4 @@
-/**
- * The Server class initializes and starts an RMI server based on the configuration
- * specified in a provided file.
- * @author Ratish Jha
- * @author Vatsal Thakkar
- */
+
 
 // package Server;
 import java.io.*;
@@ -11,6 +6,12 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * The Server class initializes and starts an RMI server based on the configuration
+ * specified in a provided file.
+ * @author Ratish Jha
+ * @author Vatsal Thakkar
+ */
 public class Server {
 	/**
      * The main method of the Server class.
