@@ -15,4 +15,4 @@ nohup ../jdk-17.0.5/bin/rmiregistry 9100
 ../jdk-17.0.5/bin/javac *.java
 
 #starting the server
-nohup ../jdk-17.0.5/bin/java Server server-config.txt > server.log 2>&1 &
+../jdk-17.0.5/bin/java Server server-config.txt  2>&1
