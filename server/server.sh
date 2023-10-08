@@ -9,10 +9,10 @@ if [[ -n $1 ]]; then
 fi
 
 #start the rmiregistry
-nohup ../jdk-17.0.5/bin/rmiregistry 9100
+../jdk-17.0.5/bin/rmiregistry 9100 &
 
 #compiling th fresh code
 ../jdk-17.0.5/bin/javac *.java
-
+echo "starting server.."
 #starting the server
 ../jdk-17.0.5/bin/java Server server-config.txt  2>&1
