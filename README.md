@@ -30,7 +30,7 @@ Then, start the RMI Registry on port 9100 (You can use any port but make sure to
 
 ### Step 3: Start the Server
 
-####
+#### start script
 ```
 chmod +x server.sh
 ./server.sh [-d] 
@@ -73,6 +73,12 @@ Start the client and interact with server:
 ```bash
 java Client client-config.txt
 ```
+## Stop Server
+```
+chmod +x stop.sh
+./stop.sh
+```
+
 
 ## Configuration File (server-config.txt & client-config.txt)
 
