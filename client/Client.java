@@ -201,14 +201,14 @@ public class Client {
 
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e);
-            // System.exit(0);
+            System.exit(0);
         } catch (NumberFormatException e) {
             System.err.println("Invalid capacity specified in the file.");
-            // System.exit(0);
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Exception in client side" + e);
             e.printStackTrace();
-            // System.exit(0);
+            System.exit(0);
         }
 
     }

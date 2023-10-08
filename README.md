@@ -27,11 +27,19 @@ cd server
 ```
 Then, start the RMI Registry on port 9100 (You can use any port but make sure to change the port in `server-config.txt` and `client-config.txt` files):
 
+
+### Step 3: Start the Server
+
+####
+```
+chmod +x server.sh
+./server.sh [-d] 
+-d for download local copy of java
+```
+#### start manually
 ```bash 
 rmiregistry 9100
 ```
-### Step 3: Start the Server
-
 In the second terminal, navigate to the 'server' directory:
 
 ```bash
