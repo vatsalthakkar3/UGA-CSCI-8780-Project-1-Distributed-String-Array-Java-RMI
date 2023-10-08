@@ -18,7 +18,19 @@ Follow these steps to set up and run the project:
 
 Open three separate terminal windows or command prompts.
 
-### Step 2: Start the RMI Registry
+
+### Step 2 & 3: Start Server and RMI registry using shell Script
+
+you can start the server and RMI registry using the provided `server.sh` script. It will automatically start the RMI registry and Server.
+
+```
+chmod +x server.sh
+./server.sh [-d] 
+-d for download local copy of java
+```
+
+Note: If you started the RMI registry and Server using script then you can skip the following two steps (`Step 2 (Manual) and Step 3 (manual)`) and directly go to `Step 4`. 
+### Step 2: Start the RMI Registry (Manual)
 
 In the first terminal, navigate to the 'server' directory:
 
@@ -28,14 +40,8 @@ cd server
 Then, start the RMI Registry on port 9100 (You can use any port but make sure to change the port in `server-config.txt` and `client-config.txt` files):
 
 
-### Step 3: Start the Server
+### Step 3: Start the Server (Manual)
 
-#### start script
-```
-chmod +x server.sh
-./server.sh [-d] 
--d for download local copy of java
-```
 #### Start Manually
 ```bash 
 rmiregistry 9100
@@ -104,9 +110,9 @@ The `client-config.txt` file follows a specific format with each line serving a 
 
 1. **Bind Name (rsa):** The first line specifies the bind name (`rsa`) under which the Remote String Array will be registered on the RMI registry. This name is crucial for the client to look up and communicate with the server's Remote String Array.
 
-2. **Host:** The fourth line specifies the IP address or hostname where the RMI registry is located. It's essential for the client to know the server's location to establish a connection.
+2. **Host:** The second line specifies the IP address or hostname where the RMI registry is located. It's essential for the client to know the server's location to establish a connection.
 
-3. **Port:** The fifth line designates the port number on which the RMI registry is listening. This port number is crucial for client-server communication.
+3. **Port:** The third line designates the port number on which the RMI registry is listening. This port number is crucial for client-server communication.
 
 ### Example Configuration
 

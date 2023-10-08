@@ -380,17 +380,19 @@ code {
 <p>Follow these steps to set up and run the project:</p>
 <h3 id="step-1-open-three-terminals">Step 1: Open Three Terminals</h3>
 <p>Open three separate terminal windows or command prompts.</p>
-<h3 id="step-2-start-the-rmi-registry">Step 2: Start the RMI Registry</h3>
-<p>In the first terminal, navigate to the 'server' directory:</p>
-<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
-</div></code></pre>
-<p>Then, start the RMI Registry on port 9100 (You can use any port but make sure to change the port in <code>server-config.txt</code> and <code>client-config.txt</code> files):</p>
-<h3 id="step-3-start-the-server">Step 3: Start the Server</h3>
-<h4 id="start-script">start script</h4>
+<h3 id="step-2--3-start-server-and-rmi-registry-using-shell-script">Step 2 &amp; 3: Start Server and RMI registry using shell Script</h3>
+<p>you can start the server and RMI registry using the provided <code>server.sh</code> script. It will automatically start the RMI registry and Server.</p>
 <pre class="hljs"><code><div>chmod +x server.sh
 ./server.sh [-d] 
 -d for download local copy of java
 </div></code></pre>
+<p>Note: If you started the RMI registry and Server using script then you can skip the following two steps (<code>Step 2 (Manual) and Step 3 (manual)</code>) and directly go to <code>Step 4</code>.</p>
+<h3 id="step-2-start-the-rmi-registry-manual">Step 2: Start the RMI Registry (Manual)</h3>
+<p>In the first terminal, navigate to the 'server' directory:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
+</div></code></pre>
+<p>Then, start the RMI Registry on port 9100 (You can use any port but make sure to change the port in <code>server-config.txt</code> and <code>client-config.txt</code> files):</p>
+<h3 id="step-3-start-the-server-manual">Step 3: Start the Server (Manual)</h3>
 <h4 id="start-manually">Start Manually</h4>
 <pre class="hljs"><code><div>rmiregistry 9100
 </div></code></pre>
@@ -445,10 +447,10 @@ code {
 <p><strong>Bind Name (rsa):</strong> The first line specifies the bind name (<code>rsa</code>) under which the Remote String Array will be registered on the RMI registry. This name is crucial for the client to look up and communicate with the server's Remote String Array.</p>
 </li>
 <li>
-<p><strong>Host:</strong> The fourth line specifies the IP address or hostname where the RMI registry is located. It's essential for the client to know the server's location to establish a connection.</p>
+<p><strong>Host:</strong> The second line specifies the IP address or hostname where the RMI registry is located. It's essential for the client to know the server's location to establish a connection.</p>
 </li>
 <li>
-<p><strong>Port:</strong> The fifth line designates the port number on which the RMI registry is listening. This port number is crucial for client-server communication.</p>
+<p><strong>Port:</strong> The third line designates the port number on which the RMI registry is listening. This port number is crucial for client-server communication.</p>
 </li>
 </ol>
 <h3 id="example-configuration">Example Configuration</h3>
