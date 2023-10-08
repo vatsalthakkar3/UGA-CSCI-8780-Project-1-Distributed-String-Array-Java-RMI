@@ -135,8 +135,12 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         if (this.writeLock.containsKey(index) && this.writeLock.get(index).equals(clientID)) {
             this.writeLock.remove(index);
         }
-        if (this.readLock.containsKey(index))
-            this.readLock.get(index).add(clientID);
+        if (this.readLock.containsKey(index)){
+            if (!this.readLock.get(index).contains(clientID)){
+                    this.readLock.get(index).add(clientID);
+            }   
+        }
+            
         else {
             ArrayList<String> clientList = new ArrayList<String>();
             clientList.add(clientID);
