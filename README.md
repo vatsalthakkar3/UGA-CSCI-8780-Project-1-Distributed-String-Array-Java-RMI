@@ -36,7 +36,7 @@ chmod +x server.sh
 ./server.sh [-d] 
 -d for download local copy of java
 ```
-#### start manually
+#### Start Manually
 ```bash 
 rmiregistry 9100
 ```
@@ -94,7 +94,7 @@ The `server-config.txt` file follows a specific format with each line serving a 
 
 ### Format (client-config.txt)
 
-The `server-config.txt` file follows a specific format with each line serving a distinct purpose:
+The `client-config.txt` file follows a specific format with each line serving a distinct purpose:
 
 1. **Bind Name (rsa):** The first line specifies the bind name (`rsa`) under which the Remote String Array will be registered on the RMI registry. This name is crucial for the client to look up and communicate with the server's Remote String Array.
 
