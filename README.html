@@ -385,9 +385,15 @@ code {
 <pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
 </div></code></pre>
 <p>Then, start the RMI Registry on port 9100 (You can use any port but make sure to change the port in <code>server-config.txt</code> and <code>client-config.txt</code> files):</p>
+<h3 id="step-3-start-the-server">Step 3: Start the Server</h3>
+<h4 id="start-script">start script</h4>
+<pre class="hljs"><code><div>chmod +x server.sh
+./server.sh [-d] 
+-d for download local copy of java
+</div></code></pre>
+<h4 id="start-manually">Start Manually</h4>
 <pre class="hljs"><code><div>rmiregistry 9100
 </div></code></pre>
-<h3 id="step-3-start-the-server">Step 3: Start the Server</h3>
 <p>In the second terminal, navigate to the 'server' directory:</p>
 <pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
 </div></code></pre>
@@ -406,6 +412,10 @@ code {
 </div></code></pre>
 <p>Start the client and interact with server:</p>
 <pre class="hljs"><code><div>java Client client-config.txt
+</div></code></pre>
+<h2 id="stop-server">Stop Server</h2>
+<pre class="hljs"><code><div>chmod +x stop.sh
+./stop.sh
 </div></code></pre>
 <h2 id="configuration-file-server-configtxt--client-configtxt">Configuration File (server-config.txt &amp; client-config.txt)</h2>
 <p>The <code>client-config.txt</code> &amp; <code>server-config.txt</code> file is used to configure the client and server applications for interacting with a distributed string array. This file contains important information such as the server's host and port details, the array's initial capacity, and other configuration parameters.</p>
@@ -429,7 +439,7 @@ code {
 </li>
 </ol>
 <h3 id="format-client-configtxt">Format (client-config.txt)</h3>
-<p>The <code>server-config.txt</code> file follows a specific format with each line serving a distinct purpose:</p>
+<p>The <code>client-config.txt</code> file follows a specific format with each line serving a distinct purpose:</p>
 <ol>
 <li>
 <p><strong>Bind Name (rsa):</strong> The first line specifies the bind name (<code>rsa</code>) under which the Remote String Array will be registered on the RMI registry. This name is crucial for the client to look up and communicate with the server's Remote String Array.</p>
