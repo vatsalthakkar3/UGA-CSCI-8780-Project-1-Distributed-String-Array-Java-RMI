@@ -183,7 +183,7 @@ public class Client {
                                 System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
                             }
                         } catch (Exception e) {
-                            System.out.println("🚨 Error: invalid syntax error");
+                            System.out.println("🚨 Error: " + e);
                         }
                     System.out.println(
                             "\n************************************************************************************************");
