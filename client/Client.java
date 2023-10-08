@@ -83,105 +83,107 @@ public class Client {
                     //     System.out.print("\nEnter the Index of Element to fetch: ");
                     //     index = sc.nextInt();
                     // }
-
-
                     System.out.print("\n");
-                    if(choice.trim().equals("getsize")) {
+                    try {
+                        if(choice.trim().equals("getsize")) {
                             int capacity = s.getCapacity();
                             System.out.println("Capacity of the string array: " + capacity);
-                        }
-                    else if(choice.trim().split("\\s+")[0].equals("readf")){
-                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
-                            String readElement = s.fetchElementRead(index, clientId);
-                            
-                           if (readElement == null) {
-                                System.out.println(
-                                        "🚨 Error: Failed to fetch element at index " + index + " in READ mode." +
-                                                "\nThis may occur if the resource is already occupied by someone else.");
+                            }
+                        else if(choice.trim().split("\\s+")[0].equals("readf")){
+                                index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+                                String readElement = s.fetchElementRead(index, clientId);
 
-                            } else {
-                                fetchedElement.put(index, readElement);
-                                System.out.println(
-                                        "🥳 Success: Element at index " + index + " has been Fetched in READ mode.");
-                                System.out.println("Fetched Element at index " + index + " : " + readElement);
-                            }
-                        }
-                    else if(choice.trim().split("\\s+")[0].equals("writef")) {
-                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
-                            String writeElement = s.fetchElementWrite(index, clientId);
-                            
-                           if (writeElement == null) {
-                                System.out.println(
-                                        "🚨 Error: Failed to fetch element at index " + index + " in READ/WRITE mode." +
-                                                "\nThis may occur if the resource is already occupied by someone else.");
-                            } else {
-                                fetchedElement.put(index, writeElement);
-                                System.out.println("🥳 Success: Element at index " + index
-                                        + " has been Fetched in READ/WRITE mode.");
-                                System.out.println("Fetched Element at index " + index + " : " + writeElement);
-                            }
-                        }
-                    else if(choice.trim().split("\\s+")[0].equals("print")){
+                               if (readElement == null) {
+                                    System.out.println(
+                                            "🚨 Error: Failed to fetch element at index " + index + " in READ mode." +
+                                                    "\nThis may occur if the resource is already occupied by someone else.");
 
-                            // TODO: Output Formatting
-                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
-                            if (fetchedElement.containsKey(index)) {
-                                System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
-                            } else {
-                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
-                                        + " in READ or READ/WRITE mode.");
-                                System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
-                                        : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
-                                                .map(Object::toString).collect(Collectors.joining(" ")));
+                                } else {
+                                    fetchedElement.put(index, readElement);
+                                    System.out.println(
+                                            "🥳 Success: Element at index " + index + " has been Fetched in READ mode.");
+                                    System.out.println("Fetched Element at index " + index + " : " + readElement);
+                                }
                             }
-                        }
-                    else if(choice.trim().split("\\s+")[0].equals("cat")) {
-                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
-                            if (fetchedElement.containsKey(index)) {
-                                System.out.print("\nEnter a String to concatenate: ");
-                                cc = sc.next();
-                                String concated = fetchedElement.get(index) + cc;
-                                fetchedElement.put(index, concated);
-                                System.out.println("Concated String : " + concated);
-                            } else
-                                System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
-                                        + " in READ or READ/WRITE mode.");
-                                System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
-                                        : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
-                                                .map(Object::toString).collect(Collectors.joining(" ")));
-                        }
-                    else if(choice.trim().split("\\s+")[0].equals("write")) {
-                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+                        else if(choice.trim().split("\\s+")[0].equals("writef")) {
+                                index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+                                String writeElement = s.fetchElementWrite(index, clientId);
 
-                            // TODO: Output Formatting
-                            boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
-                            if (op) {
-                                System.out.println("🥳 Element Successfully written back.");
-                            } else {
-                                System.out.println(
-                                        "🚨 Error: Failed to write back. (You don't have write access at index "
-                                                + index + ".)");
+                               if (writeElement == null) {
+                                    System.out.println(
+                                            "🚨 Error: Failed to fetch element at index " + index + " in READ/WRITE mode." +
+                                                    "\nThis may occur if the resource is already occupied by someone else.");
+                                } else {
+                                    fetchedElement.put(index, writeElement);
+                                    System.out.println("🥳 Success: Element at index " + index
+                                            + " has been Fetched in READ/WRITE mode.");
+                                    System.out.println("Fetched Element at index " + index + " : " + writeElement);
+                                }
                             }
-                        }
-                    else if(choice.trim().split("\\s+")[0].equals("release")) {
-                            index = Integer.valueOf(choice.trim().split("\\s+")[1]);
-                            // TODO: Output Formatting
-                            s.releaseLock(index, clientId);
-                            System.out.println("Lock has been released on Element at index : " + index);
-                            if (fetchedElement.containsKey(index)) {
-                                fetchedElement.remove(index);
+                        else if(choice.trim().split("\\s+")[0].equals("print")){
+
+                                // TODO: Output Formatting
+                                index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+                                if (fetchedElement.containsKey(index)) {
+                                    System.out.println("Element at index " + index + " : " + fetchedElement.get(index));
+                                } else {
+                                    System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
+                                            + " in READ or READ/WRITE mode.");
+                                    System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
+                                            : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
+                                                    .map(Object::toString).collect(Collectors.joining(" ")));
+                                }
                             }
-                        }
-                    else if(choice.trim().split("\\s+")[0].equals("exit")) {
-                        System.out.println("Exiting...");
-                        for (int i = 0; i < s.getCapacity(); i++) {
-                            s.releaseLock(i, clientId);
-                        }
-                        System.exit(0);
-                        }
-                    else {
-                        if(!choice.equals(""))
-                            System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
+                        else if(choice.trim().split("\\s+")[0].equals("cat")) {
+                                index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+                                if (fetchedElement.containsKey(index)) {
+                                    System.out.print("\nEnter a String to concatenate: ");
+                                    cc = sc.next();
+                                    String concated = fetchedElement.get(index) + cc;
+                                    fetchedElement.put(index, concated);
+                                    System.out.println("Concated String : " + concated);
+                                } else
+                                    System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
+                                            + " in READ or READ/WRITE mode.");
+                                    System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
+                                            : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
+                                                    .map(Object::toString).collect(Collectors.joining(" ")));
+                            }
+                        else if(choice.trim().split("\\s+")[0].equals("write")) {
+                                index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+
+                                // TODO: Output Formatting
+                                boolean op = s.writeBackElement(fetchedElement.get(index), index, clientId);
+                                if (op) {
+                                    System.out.println("🥳 Element Successfully written back.");
+                                } else {
+                                    System.out.println(
+                                            "🚨 Error: Failed to write back. (You don't have write access at index "
+                                                    + index + ".)");
+                                }
+                            }
+                        else if(choice.trim().split("\\s+")[0].equals("release")) {
+                                index = Integer.valueOf(choice.trim().split("\\s+")[1]);
+                                // TODO: Output Formatting
+                                s.releaseLock(index, clientId);
+                                System.out.println("Lock has been released on Element at index : " + index);
+                                if (fetchedElement.containsKey(index)) {
+                                    fetchedElement.remove(index);
+                                }
+                            }
+                        else if(choice.trim().split("\\s+")[0].equals("exit")) {
+                            System.out.println("Exiting...");
+                            for (int i = 0; i < s.getCapacity(); i++) {
+                                s.releaseLock(i, clientId);
+                            }
+                            System.exit(0);
+                            }
+                        else {
+                            if(!choice.equals(""))
+                                System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("🚨 Error: invalid syntax error")
                         }
                     System.out.println(
                             "\n************************************************************************************************");
