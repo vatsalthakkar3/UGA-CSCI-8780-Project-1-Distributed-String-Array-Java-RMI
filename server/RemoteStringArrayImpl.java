@@ -20,7 +20,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     // Define attributes.
     private String[] stringArray;
     private Map<String, String> clientIds = new HashMap<>();
-    private HashMap<Integer, ArrayList<String>> readLock = new HashMap<>();
+    private ConcurrentHashMap<Integer, ArrayList<String>> readLock = new ConcurrentHashMap<>();
     private ConcurrentHashMap<Integer, String> writeLock = new ConcurrentHashMap<>();
 
     /**
