@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Locks;
 /**
  * The RemoteStringArrayImpl class implements the RemoteStringArray interface and provides
  * remote methods for interacting with a distributed string array.
@@ -22,6 +23,10 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     private Map<String, String> clientIds = new HashMap<>();
     private ConcurrentHashMap<Integer, ArrayList<String>> readLock = new ConcurrentHashMap<>();
     private ConcurrentHashMap<Integer, String> writeLock = new ConcurrentHashMap<>();
+
+    ReadWriteLock lock = new ReentrantReadWriteLock();
+    Lock writeReLock = lock.writeLock();
+    Lock readReLock = lock.readLock();
 
     /**
      * Parameterized constructor to initialize the RemoteStringArrayImpl.
@@ -130,22 +135,30 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
      */
     @Override
     public boolean requestReadLock(int index, String clientID) throws RemoteException {
+        readReLock.lock();
         if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID)))
             return false;
         if (this.writeLock.containsKey(index) && this.writeLock.get(index).equals(clientID)) {
+            writeReLock.lock();
             this.writeLock.remove(index);
+            writeReLock.unlock();
         }
         if (this.readLock.containsKey(index)){
             if (!this.readLock.get(index).contains(clientID)){
-                    this.readLock.get(index).add(clientID);
+                writeReLock.lock();
+                this.readLock.get(index).add(clientID);
+                writeReLock.unlock();
             }   
         }
             
         else {
             ArrayList<String> clientList = new ArrayList<String>();
             clientList.add(clientID);
+            writeReLock.lock();
             this.readLock.put(index, clientList);
+            writeReLock.unlock();
         }
+        readReLock.unlock();
         return true;
     }
 
@@ -154,6 +167,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
      */
     @Override
     public boolean requestWriteLock(int index, String clientID) throws RemoteException {
+        readReLock.lock();
         if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID))) {
             return false;
         }
@@ -165,7 +179,10 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
                 && !(this.readLock.get(index).contains(clientID))) {
             return false;
         }
+        writeReLock.lock();
         this.writeLock.put(index, clientID);
+        writeReLock.unlock();
+        readReLock.unlock();
         return true;
     }
 
@@ -175,10 +192,14 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
     @Override
     public void releaseLock(int index, String clientID) throws RemoteException {
         if (this.writeLock.containsKey(index) && this.writeLock.get(index).equals(clientID)) { //release writeLock only if client requested is the one who has the lock 
+            writeReLock.lock();
             this.writeLock.remove(index);
+            writeReLock.unlock();
         }
         if (this.readLock.containsKey(index) && this.readLock.get(index).contains(clientID)) {
+            writeReLock.lock();
             this.readLock.get(index).remove(clientID);
+            writeReLock.unlock();
         }
     }
 
