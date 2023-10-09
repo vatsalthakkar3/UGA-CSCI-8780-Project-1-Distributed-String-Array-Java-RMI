@@ -135,7 +135,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
      */
     @Override
     public boolean requestReadLock(int index, String clientID) throws RemoteException {
-        readReLock.lock();
+        // readReLock.lock();
         if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID)))
             return false;
         if (this.writeLock.containsKey(index) && this.writeLock.get(index).equals(clientID)) {
@@ -158,7 +158,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
             this.readLock.put(index, clientList);
             writeReLock.unlock();
         }
-        readReLock.unlock();
+        // readReLock.unlock();
         return true;
     }
 
@@ -167,7 +167,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
      */
     @Override
     public boolean requestWriteLock(int index, String clientID) throws RemoteException {
-        readReLock.lock();
+        // readReLock.lock();
         if (this.writeLock.containsKey(index) && !(this.writeLock.get(index).equals(clientID))) {
             return false;
         }
@@ -182,7 +182,7 @@ public class RemoteStringArrayImpl implements RemoteStringArray {
         writeReLock.lock();
         this.writeLock.put(index, clientID);
         writeReLock.unlock();
-        readReLock.unlock();
+        // readReLock.unlock();
         return true;
     }
 
