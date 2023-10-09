@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Locks;
+import java.util.concurrent.locks.*;
 /**
  * The RemoteStringArrayImpl class implements the RemoteStringArray interface and provides
  * remote methods for interacting with a distributed string array.
