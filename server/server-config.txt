@@ -1,5 +1,5 @@
 rsa
 5
-Apple, Pineapple, Mango
+Software Development, Data Structures, Discrete Math, Theory of Computation, Data Science
 127.0.0.1
 9100
