@@ -85,11 +85,11 @@ public class Client {
                     // }
                     System.out.print("\n");
                     try {
-                        if(choice.trim().equals("getsize")) {
+                        if("getsize".equals(choice.trim())) {
                             int capacity = s.getCapacity();
                             System.out.println("Capacity of the string array: " + capacity);
                             }
-                        else if(choice.trim().split("\\s+")[0].equals("readf")){
+                        else if("readf".equals(choice.trim().split("\\s+")[0])){
                                 index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                                 String readElement = s.fetchElementRead(index, clientId);
 
@@ -105,7 +105,7 @@ public class Client {
                                     System.out.println("Fetched Element at index " + index + " : " + readElement);
                                 }
                             }
-                        else if(choice.trim().split("\\s+")[0].equals("writef")) {
+                        else if("writef".equals(choice.trim().split("\\s+")[0])) {
                                 index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                                 String writeElement = s.fetchElementWrite(index, clientId);
 
@@ -120,7 +120,7 @@ public class Client {
                                     System.out.println("Fetched Element at index " + index + " : " + writeElement);
                                 }
                             }
-                        else if(choice.trim().split("\\s+")[0].equals("print")){
+                        else if("print".equals(choice.trim().split("\\s+")[0])){
 
                                 // TODO: Output Formatting
                                 index = Integer.valueOf(choice.trim().split("\\s+")[1]);
@@ -134,7 +134,7 @@ public class Client {
                                                     .map(Object::toString).collect(Collectors.joining(" ")));
                                 }
                             }
-                        else if(choice.trim().split("\\s+")[0].equals("cat")) {
+                        else if("cat".equals(choice.trim().split("\\s+")[0])) {
                                 index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                                 if (fetchedElement.containsKey(index)) {
                                     System.out.print("\nEnter a String to concatenate: ");
@@ -149,7 +149,7 @@ public class Client {
                                             : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
                                                     .map(Object::toString).collect(Collectors.joining(" ")));
                             }
-                        else if(choice.trim().split("\\s+")[0].equals("write")) {
+                        else if("write".equals(choice.trim().split("\\s+")[0])) {
                                 index = Integer.valueOf(choice.trim().split("\\s+")[1]);
 
                                 // TODO: Output Formatting
@@ -162,7 +162,7 @@ public class Client {
                                                     + index + ".)");
                                 }
                             }
-                        else if(choice.trim().split("\\s+")[0].equals("release")) {
+                        else if("release".equals(choice.trim().split("\\s+")[0])) {
                                 index = Integer.valueOf(choice.trim().split("\\s+")[1]);
                                 // TODO: Output Formatting
                                 s.releaseLock(index, clientId);
@@ -171,7 +171,7 @@ public class Client {
                                     fetchedElement.remove(index);
                                 }
                             }
-                        else if(choice.trim().split("\\s+")[0].equals("exit")) {
+                        else if("exit".equals(choice.trim().split("\\s+")[0])) {
                             System.out.println("Exiting...");
                             for (int i = 0; i < s.getCapacity(); i++) {
                                 s.releaseLock(i, clientId);
@@ -179,7 +179,7 @@ public class Client {
                             System.exit(0);
                             }
                         else {
-                            if(!choice.equals(""))
+                            if(!"".equals(choice))
                                 System.out.println("ALERT 🚨 : Invalid choice. Please try again !!!");
                             }
                         } catch (Exception e) {
