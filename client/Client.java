@@ -143,8 +143,10 @@ public class Client {
                                     fetchedElement.put(index, concated);
                                     System.out.println("Concated String : " + concated);
                                 } else
-                                    System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
+                                    {
+                                        System.out.println(" 🚨 Error: You Need to first fetch the element at index " + index
                                             + " in READ or READ/WRITE mode.");
+                                    }
                                     System.out.println(fetchedElement.isEmpty() ? "You haven't fetched any elements."
                                             : "Available Fetched Indexes : " + fetchedElement.keySet().stream()
                                                     .map(Object::toString).collect(Collectors.joining(" ")));
