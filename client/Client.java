@@ -1,3 +1,4 @@
+import io.github.pixee.security.BoundedLineReader;
 import java.io.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -40,11 +41,11 @@ public class Client {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
             // Read Bind Name from the first line of the file
-            String bindName = reader.readLine().strip();
+            String bindName = BoundedLineReader.readLine(reader, 5_000_000).strip();
             // Read the host IP / Name
-            String host = reader.readLine().strip();
+            String host = BoundedLineReader.readLine(reader, 5_000_000).strip();
             // Read the capacity from the second line of the file
-            int port = Integer.parseInt(reader.readLine().strip());
+            int port = Integer.parseInt(BoundedLineReader.readLine(reader, 5_000_000).strip());
 
             reader.close();
 
